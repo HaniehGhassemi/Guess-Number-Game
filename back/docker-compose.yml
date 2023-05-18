@@ -18,7 +18,9 @@ services:
       - DB_PORT=$POSTGRES_DB_DOCKER_PORT
       - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:$POSTGRES_DB_DOCKER_PORT/$POSTGRES_DB
     volumes:
-      - .:/usr/src/app
+      # for develop purpose
+      # - .:/usr/src/app
+      # ------------------
       - /usr/src/app/node_modules/
   postgres:
     image: postgres:11
