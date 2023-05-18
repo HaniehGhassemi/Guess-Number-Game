@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { GlobalModule } from './modules/global/global.module';
-import { GameModule } from './modules/game/game.module';
+import { GuessNumberModule } from './modules/games/guess-number/guess-number.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -9,7 +10,8 @@ import { GameModule } from './modules/game/game.module';
       isGlobal: true,
     }),
     GlobalModule,
-    GameModule,
+    GuessNumberModule,
+    UsersModule,
   ],
 })
 export class AppModule {}
