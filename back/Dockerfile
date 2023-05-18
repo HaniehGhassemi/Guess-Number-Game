@@ -10,7 +10,7 @@ RUN yarn install --frozen-lockfile
 COPY . .
 
 # Prepare prisma ORM
-RUN yarn prisma generate
+RUN yarn prisma generate --schema=./src/prisma/schema.prisma
 
 EXPOSE 3000
 
