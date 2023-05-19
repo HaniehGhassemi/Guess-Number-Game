@@ -19,15 +19,17 @@ export class AllExceptionsFilter implements ExceptionFilter {
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
-
-    const responseBody: ResponseDto<string> = {
+    const responseBody: ResponseDto = {
       success: false,
       data:
         exception instanceof HttpException
-          ? exception.message
-          : CommonError.INTERNAL_SERVER_ERROR,
+          ? exception.getResponse()
+          : {
+              statusCode: 500,
+              message: CommonError.INTERNAL_SERVER_ERROR,
+              error: CommonError.INTERNAL_SERVER_ERROR,
+            },
     };
-
     response.status(httpStatus).json(responseBody);
   }
 }

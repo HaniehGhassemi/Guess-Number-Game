@@ -1,4 +1,4 @@
-export interface ResponseDto<Type> {
+export interface ResponseDto {
   success?: boolean;
-  data?: Type;
+  data?: unknown;
 }
