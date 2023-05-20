@@ -22,6 +22,8 @@ services:
       # - .:/usr/src/app
       # ------------------
       - /usr/src/app/node_modules/
+    networks:
+      - gamenet
   postgres:
     image: postgres:11
     env_file: ./.env
@@ -34,3 +36,14 @@ services:
 
     volumes:
        - ./data:/var/lib/postgresql/data
+    networks:
+      - gamenet
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - 6379:6379
+    networks:
+      - gamenet
+
+networks:
+  gamenet:
