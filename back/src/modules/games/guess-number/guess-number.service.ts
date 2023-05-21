@@ -44,13 +44,16 @@ export class GuessNumberService {
     const gameSession: GameSession = JSON.parse(
       await this.getGameSession(userId),
     );
-    if (+checkAnswerDto.userAnswer === gameSession.randomNumber) {
+    //check if user won
+    if (checkAnswerDto.userAnswer === gameSession.randomNumber) {
       const score = this.calculateScore(gameSession.chance);
       await this.saveScore({
-        gameId: +checkAnswerDto.gameId,
+        gameId: checkAnswerDto.gameId,
         userId: +userId,
         score,
       });
+      //delete session
+      await this.deleteGameSession(userId);
       return {
         success: true,
         data: {
@@ -60,9 +63,10 @@ export class GuessNumberService {
       };
     }
     gameSession.chance--;
-    gameSession.userAnswer = +checkAnswerDto.userAnswer;
-    //save game session
-    await this.redis.set(userId, JSON.stringify(gameSession));
+    gameSession.userAnswer = checkAnswerDto.userAnswer;
+    // if user lose , delete session otherwise save session
+    if (gameSession.chance == 0) await this.deleteGameSession(userId);
+    else await this.redis.set(userId, JSON.stringify(gameSession));
     return {
       success: true,
       data: {
@@ -71,7 +75,7 @@ export class GuessNumberService {
         message:
           gameSession.chance == 0
             ? guessNumberMessages.USER_LOSE
-            : +checkAnswerDto.userAnswer < gameSession.randomNumber
+            : checkAnswerDto.userAnswer < gameSession.randomNumber
             ? guessNumberMessages.ANSWER_TOO_LOW
             : guessNumberMessages.ANSWER_TOO_HIGH,
       },

@@ -1,4 +1,4 @@
-import { Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
 import { GuessNumberService } from './guess-number.service';
 import { AuthGuard } from '@nestjs/passport';
 import { CheckAnswerDto } from './dto/check-answer.dto';
@@ -14,7 +14,7 @@ export class GuessNumberController {
 
   @Post('check-answer')
   @UseGuards(AuthGuard())
-  checkAnswer(@Req() req, checkAnswerDto: CheckAnswerDto) {
+  checkAnswer(@Req() req, @Body() checkAnswerDto: CheckAnswerDto) {
     return this.guessNumberService.checkAnswer(checkAnswerDto, req.user.userId);
   }
 }
