@@ -1,0 +1,141 @@
+header {
+  width: 100%;
+  height: 8vh;
+  background-color: rgb(10, 15, 21);
+}
+
+.header-container {
+  width: 80%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.logo-section {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.logo {
+  width: 40%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.menu-nav {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  height: 100%;
+  color: #979aa1;
+}
+
+.menu-nav li {
+  width: auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10%;
+}
+
+.underline-active:hover {
+  border-bottom: 5px solid #a02247;
+  color: white !important;
+}
+
+.profile-section {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: #979aa1;
+}
+
+.profile-pic {
+  width: 20%;
+  text-align: right;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-circle {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  outline: 1px solid gray;
+  padding: 2px;
+}
+
+.username {
+  display: flex;
+}
+
+.user-menu-section {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #2a2d32;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  flex-direction: column;
+  top: 8vh;
+}
+
+.user-menu-section:hover .dropdown-content {
+  display: flex;
+}
+
+.dropdown-content a {
+  color: #979aa1;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content:hover {
+  display: flex;
+}
+
+.dropdown-content a:hover {
+  color: white;
+}
+
+#login-sction a {
+  display: inline-block;
+}
+
+#login-sction {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+}
+
+.dropdown-item:nth-child(3) {
+  border-bottom: 1px solid gray;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
