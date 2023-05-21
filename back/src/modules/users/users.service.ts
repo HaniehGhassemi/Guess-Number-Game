@@ -1,6 +1,7 @@
 import {
   ForbiddenException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { PrismaService } from '../global/services/prisma/prisma.service';
@@ -11,6 +12,7 @@ import { SignUpResponseDto } from './dto/sign-up-response.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { AuthService } from './auth.service';
 import { SignInResponseDto } from './dto/sign-in-response.dto';
+import { GetUserInfo } from './dto/get-user-info-response.dto';
 
 @Injectable()
 export class UsersService {
@@ -54,7 +56,7 @@ export class UsersService {
     return {
       success: true,
       data: {
-        id: createdUser.uid,
+        id: createdUser.id,
       },
     };
   }
@@ -71,9 +73,46 @@ export class UsersService {
     });
     //return jwt token if credentioals is valid
     if (user && (await bcrypt.compare(signInDto.password, user.password))) {
-      const token = await this.authService.generateToken({ userId: user.uid });
+      const token = await this.authService.generateToken({ userId: user.id });
       return { success: true, data: token };
     }
     throw new UnauthorizedException(userErrors.InValid_Credentials);
+  }
+
+  async getUserInfo(userId: number): Promise<GetUserInfo> {
+    //check user exist
+    const user = await this.prisma.client.user.findFirst({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new NotFoundException();
+    }
+
+    const plays = await this.prisma.client.play.groupBy({
+      by: ['userId'],
+      orderBy: { _sum: { score: 'desc' } },
+      _sum: { score: true },
+      _count: { _all: true },
+    });
+
+    if (!plays) {
+      trow;
+    }
+
+    const playsOfUser = plays.find((p) => p.userId === userId);
+    const userRank = plays.findIndex((p) => p.userId === userId) + 1;
+
+    return {
+      success: true,
+      data: {
+        userId: user.id,
+        userName: user.username,
+        fullName: user.fullname,
+        sumScore: playsOfUser?._sum.score ?? 0,
+        playCount: playsOfUser?._count._all ?? 0,
+        rank: userRank != -1 ? userRank : 0,
+      },
+    };
   }
 }
