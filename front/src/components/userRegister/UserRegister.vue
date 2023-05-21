@@ -72,8 +72,7 @@ export default defineComponent({
       const email = this.email;
       const password = this.password;
       const repassword = this.repassword;
-      // console.warn("signup", name, username, email, password, repassword);
-      let result = await axios.post("", {
+      let result = await axios.post("http://localhost:8080/api/users/signup", {
         name: name,
         username: username,
         email: email,
@@ -82,7 +81,6 @@ export default defineComponent({
       });
       console.log(result);
       if (result.status == 201) {
-        localStorage.setItem("user-info", JSON.stringify(result.data));
         this.$router.push({ name: "Home" });
       }
     },
