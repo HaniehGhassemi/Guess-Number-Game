@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { SignUpDto } from './dto/sign-up.dto';
 import { UsersService } from './users.service';
 import { SignInDto } from './dto/sign-in.dto';
@@ -20,9 +28,14 @@ export class UsersController {
     return this.userService.signIn(signInDto);
   }
 
-  @Get('user-info')
+  @Get('get-user-info')
   @UseGuards(AuthGuard())
   getUserInfo(@Req() req): Promise<GetUserInfo> {
     return this.userService.getUserInfo(req.user.userId);
+  }
+
+  @Get('get-top-players/')
+  getTopPlayers(@Query('count') count: string) {
+    return this.userService.getTopPlayers(+count);
   }
 }

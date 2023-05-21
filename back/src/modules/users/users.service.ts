@@ -12,7 +12,8 @@ import { SignUpResponseDto } from './dto/sign-up-response.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { AuthService } from './auth.service';
 import { SignInResponseDto } from './dto/sign-in-response.dto';
-import { GetUserInfo } from './dto/get-user-info-response.dto';
+import { GetUserInfo, userInfo } from './dto/get-user-info-response.dto';
+import { GetTopPlayersDto } from './dto/get-top-players-response.dto';
 
 @Injectable()
 export class UsersService {
@@ -109,6 +110,25 @@ export class UsersService {
         playCount: playsOfUser?._count._all ?? 0,
         rank: userRank,
       },
+    };
+  }
+
+  async getTopPlayers(count: number): Promise<GetTopPlayersDto> {
+    const plays = await this.prisma.client.play.groupBy({
+      by: ['userId'],
+      orderBy: { _sum: { score: 'desc' } },
+      take: count,
+    });
+    if (!plays) throw new NotFoundException(userErrors.PLAY_RECORD_NOT_FOUND);
+    const userIdList = plays.map((p) => p.userId);
+    const topPlayersInfo: userInfo[] = await Promise.all(
+      userIdList.map(async (id) => {
+        return (await this.getUserInfo(id)).data;
+      }),
+    );
+    return {
+      success: true,
+      data: topPlayersInfo,
     };
   }
 }

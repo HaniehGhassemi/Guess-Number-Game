@@ -3,4 +3,5 @@ export enum userErrors {
   EMAIL_ALREADY_EXIST = 'EMAIL_ALREADY_EXIST',
   InValid_Credentials = 'InValid_Credentials',
   USER_NOT_FOUND = 'USER_NOT_FOUND',
+  PLAY_RECORD_NOT_FOUND = 'PLAY_RECORD_NOT_FOUND',
 }
