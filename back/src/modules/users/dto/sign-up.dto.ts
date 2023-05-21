@@ -12,7 +12,7 @@ import { UserServiceValidationError } from '../types/user-service-validation-err
 export class SignUpDto {
   @MinLength(3, { message: UserServiceValidationError.USERNAME_TOO_SHORT })
   @MaxLength(20, { message: UserServiceValidationError.USERNAME_TOO_LONG })
-  @Matches(new RegExp('/^[A-Za-zs]+[A-Za-z0-9_]+$/gi'), {
+  @Matches(new RegExp('^[A-Za-z][A-Za-z0-9_]+$'),{
     message: UserServiceValidationError.USERNAME_INVALID_FORMAT,
   })
   @IsString({ message: UserServiceValidationError.USERNAME_ISNOT_STRING })
