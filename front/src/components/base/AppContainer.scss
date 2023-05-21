@@ -1,0 +1,12 @@
+@import "../../assets/fonts/fonts.css";
+
+.app-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #2e2f30;
+  flex-direction: column;
+  font-family: TiltWarp;
+}
