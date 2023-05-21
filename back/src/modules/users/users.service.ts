@@ -86,7 +86,7 @@ export class UsersService {
     });
 
     if (!user) {
-      throw new NotFoundException();
+      throw new NotFoundException(userErrors.USER_NOT_FOUND);
     }
 
     const plays = await this.prisma.client.play.groupBy({
@@ -96,12 +96,8 @@ export class UsersService {
       _count: { _all: true },
     });
 
-    if (!plays) {
-      trow;
-    }
-
-    const playsOfUser = plays.find((p) => p.userId === userId);
-    const userRank = plays.findIndex((p) => p.userId === userId) + 1;
+    const playsOfUser = plays?.find((p) => p.userId === userId);
+    const userRank = plays?.findIndex((p) => p.userId === userId) + 1;
 
     return {
       success: true,
@@ -111,7 +107,7 @@ export class UsersService {
         fullName: user.fullname,
         sumScore: playsOfUser?._sum.score ?? 0,
         playCount: playsOfUser?._count._all ?? 0,
-        rank: userRank != -1 ? userRank : 0,
+        rank: userRank,
       },
     };
   }
