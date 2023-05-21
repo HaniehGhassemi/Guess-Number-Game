@@ -6,7 +6,11 @@ import { AllExceptionsFilter } from './common/utils/all-exception-filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api');
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      stopAtFirstError: true,
+    }),
+  );
   app.useGlobalFilters(new AllExceptionsFilter());
   await app.listen(process.env.NODE_DOCKER_PORT);
 }
