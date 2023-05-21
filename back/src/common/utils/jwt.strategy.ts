@@ -18,14 +18,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     const { userId } = payload;
     const user = await this.prisma.client.user.findFirst({
       where: {
-        uid: userId,
+        id: userId,
       },
     });
     if (!user) throw new UnauthorizedException(userErrors.InValid_Credentials);
 
     return {
       fullname: user.fullname,
-      userId: user.uid,
+      userId: user.id,
     };
   }
 }
