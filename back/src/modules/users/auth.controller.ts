@@ -18,4 +18,9 @@ export class AuthController {
   signIn(@Body() signInDto: SignInDto): Promise<SignInResponseDto> {
     return this.authService.signIn(signInDto);
   }
+
+  @Post('forget/request')
+  requestResetPass(@Body() email: string, redirectLink: string) {
+    return this.authService.requestResetPass(email, redirectLink);
+  }
 }

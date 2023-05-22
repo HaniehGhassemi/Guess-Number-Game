@@ -1,16 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../global/services/prisma/prisma.service';
 import { userErrors } from './types/user-errors.enum';
-import { AuthService } from './auth.service';
 import { GetUserInfo, userInfo } from './dto/get-user-info-response.dto';
 import { GetTopPlayersDto } from './dto/get-top-players-response.dto';
+import { User } from '@prisma/client';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    private prisma: PrismaService,
-    private authService: AuthService,
-  ) {}
+  constructor(private prisma: PrismaService) {}
 
   async getUserInfo(userId: number): Promise<GetUserInfo> {
     //check user exist
@@ -62,5 +59,13 @@ export class UsersService {
       success: true,
       data: topPlayersInfo,
     };
+  }
+
+  async findUserByEmail(email: string): Promise<User> {
+    return this.prisma.client.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
   }
 }

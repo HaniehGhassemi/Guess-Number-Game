@@ -37,3 +37,10 @@ model Play {
   gameId Int    
   score Int
 }
+
+model EmailVerification {
+  id  Int     @id @default(autoincrement())
+  email String
+  token String
+  expiry DateTime
+}
