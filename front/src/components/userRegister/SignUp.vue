@@ -72,7 +72,7 @@ export default defineComponent({
       const email = this.email;
       const password = this.password;
       const repassword = this.repassword;
-      let result = await axios.post("http://localhost:8080/api/users/signup", {
+      let result = await axios.post("", {
         name: name,
         username: username,
         email: email,
@@ -88,4 +88,4 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" src="./UserRegister.scss"></style>
+<style lang="scss" src="./UserRegisterStyles.scss"></style>
