@@ -1,4 +1,12 @@
-import { Controller, Body, Post, Query, Get } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Post,
+  Query,
+  Get,
+  UseGuards,
+  Req,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignUpResponseDto } from './dto/sign-up-response.dto';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -7,6 +15,8 @@ import { SignInDto } from './dto/sign-in.dto';
 import { requestForgetPassDto } from './dto/request-forget-pass.dto';
 import { ResponseDto } from 'src/common/types/response.dto';
 import { RequestResetPassDto } from './dto/request-reset-pass.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -35,7 +45,13 @@ export class AuthController {
   }
 
   @Post('forget/reset')
-  async resetPassword(@Body() resetPasswordDto: RequestResetPassDto) {
-    return this.authService.resetPassword(resetPasswordDto);
+  async resetPasswordByLink(@Body() resetPasswordDto: RequestResetPassDto) {
+    return this.authService.resetPasswordByLink(resetPasswordDto);
+  }
+
+  @Post('auth/reset-password')
+  @UseGuards(AuthGuard())
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto, @Req() req) {
+    return this.authService.resetPassword(resetPasswordDto, req.user.userId);
   }
 }

@@ -22,6 +22,7 @@ import { requestForgetPassDto } from './dto/request-forget-pass.dto';
 import { randomBytes } from 'crypto';
 import { AuthErrors } from './types/auth-errors.enum';
 import { RequestResetPassDto } from './dto/request-reset-pass.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -144,7 +145,7 @@ export class AuthService {
     };
   }
 
-  async resetPassword(
+  async resetPasswordByLink(
     resetPasswordDto: RequestResetPassDto,
   ): Promise<ResponseDto> {
     // validate token
@@ -178,5 +179,26 @@ export class AuthService {
     return {
       success: true,
     };
+  }
+
+  async resetPassword(
+    resetPasswordDto: ResetPasswordDto,
+    userId: number,
+  ): Promise<ResponseDto> {
+    const user = await this.userService.findUserById(userId);
+    if (!user) throw new NotFoundException(userErrors.USER_NOT_FOUND);
+    const salt = await bcrypt.genSalt();
+    await this.prisma.client.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: await bcrypt.hash(resetPasswordDto.newPassword, salt),
+      },
+    });
+
+    return {
+      success: true,
+    }
   }
 }
