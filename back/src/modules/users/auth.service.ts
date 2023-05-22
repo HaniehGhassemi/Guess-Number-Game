@@ -18,7 +18,8 @@ import { UsersService } from './users.service';
 import { addDays } from 'src/common/utils/date-time.utils';
 import { MailingService } from '../mailing/mailing.service';
 import { ResponseDto } from 'src/common/types/response.dto';
-
+import { requestForgetPassDto } from './dto/request-forget-pass.dto';
+import { randomBytes } from 'crypto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -91,17 +92,19 @@ export class AuthService {
     throw new UnauthorizedException(userErrors.InValid_Credentials);
   }
 
-  async requestResetPass(
-    email: string,
-    redirectLink: string,
+  async requestForgetPass(
+    requestDto: requestForgetPassDto,
   ): Promise<ResponseDto> {
+    let { email } = requestDto;
+    console.log(email);
+    console.log(typeof email);
     email = email.trim().toLowerCase();
     //check user exist by email
     const user = await this.userService.findUserByEmail(email);
     if (!user) throw new NotFoundException(userErrors.USER_NOT_FOUND);
 
     //generate toekn
-    const token = crypto.randomUUID();
+    const token = randomBytes(16).toString('hex');
     const expiry = addDays(new Date().toString(), 2);
     console.log(expiry);
 
@@ -114,9 +117,13 @@ export class AuthService {
       },
     });
     //send email
-    await this.mailingService.sendUserConfirmation(user, token, redirectLink);
+    await this.mailingService.sendUserConfirmation(
+      user,
+      token,
+      requestDto.redirectLink,
+    );
     return {
       success: true,
-    }
+    };
   }
 }

@@ -4,6 +4,7 @@ import { SignUpResponseDto } from './dto/sign-up-response.dto';
 import { SignUpDto } from './dto/sign-up.dto';
 import { SignInResponseDto } from './dto/sign-in-response.dto';
 import { SignInDto } from './dto/sign-in.dto';
+import { requestForgetPassDto } from './dto/request-forget-pass.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -20,7 +21,7 @@ export class AuthController {
   }
 
   @Post('forget/request')
-  requestResetPass(@Body() email: string, redirectLink: string) {
-    return this.authService.requestResetPass(email, redirectLink);
+  requestResetPass(@Body() requestDto: requestForgetPassDto) {
+    return this.authService.requestForgetPass(requestDto);
   }
 }

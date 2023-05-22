@@ -16,10 +16,10 @@ export class MailingService {
     await this.mailerService.sendMail({
       to: user.email,
       // from: '"Support Team" <support@example.com>', // override default from
-      subject: 'Welcome to Guess number game! Confirm your Email',
+      subject: 'Guess Number Game - Reset password! Confirm your Email',
       template: './confirmation', // `.hbs` extension is appended automatically
       context: {
-        // ✏️ filling curly brackets with content
+        //filling curly brackets with content
         name: user.fullname,
         url,
       },

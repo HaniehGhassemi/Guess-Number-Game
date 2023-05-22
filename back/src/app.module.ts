@@ -21,10 +21,10 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         },
       },
       defaults: {
-        from: '"No Reply" <noreply@example.com>',
+        from: process.env.SMTP_EMAIL_ADDRESS,
       },
       template: {
-        dir: process.cwd() + 'src/modules/mailing/templates/',
+        dir: process.cwd() + '/src/modules/mailing/templates/',
         adapter: new HandlebarsAdapter(),
         options: {
           strict: true,
