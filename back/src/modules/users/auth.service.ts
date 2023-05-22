@@ -17,12 +17,13 @@ import { SignInResponseDto } from './dto/sign-in-response.dto';
 import { UsersService } from './users.service';
 import { addDays } from 'src/common/utils/date-time.utils';
 import { MailingService } from '../mailing/mailing.service';
-import { ResponseDto } from 'src/common/types/response.dto';
 import { requestForgetPassDto } from './dto/request-forget-pass.dto';
 import { randomBytes } from 'crypto';
 import { AuthErrors } from './types/auth-errors.enum';
 import { RequestResetPassDto } from './dto/request-reset-pass.dto';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { SuccessResponseDto } from 'src/common/dto/success-response.dto';
+import { VerifyTokenResponseDto } from './dto/verify-token-response.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -97,7 +98,7 @@ export class AuthService {
 
   async requestForgetPass(
     requestDto: requestForgetPassDto,
-  ): Promise<ResponseDto> {
+  ): Promise<SuccessResponseDto> {
     let { email } = requestDto;
     email = email.trim().toLowerCase();
     //check user exist by email
@@ -126,7 +127,7 @@ export class AuthService {
     };
   }
 
-  async verifyForgetPassToken(token: string): Promise<ResponseDto> {
+  async verifyForgetPassToken(token: string): Promise<VerifyTokenResponseDto> {
     const verifyToken = await this.prisma.client.emailVerification.findFirst({
       where: {
         token,
@@ -147,7 +148,7 @@ export class AuthService {
 
   async resetPasswordByLink(
     resetPasswordDto: RequestResetPassDto,
-  ): Promise<ResponseDto> {
+  ): Promise<SuccessResponseDto> {
     // validate token
     const verifyToken = await this.prisma.client.emailVerification.findFirst({
       where: {
@@ -184,7 +185,7 @@ export class AuthService {
   async resetPassword(
     resetPasswordDto: ResetPasswordDto,
     userId: number,
-  ): Promise<ResponseDto> {
+  ): Promise<SuccessResponseDto> {
     const user = await this.userService.findUserById(userId);
     if (!user) throw new NotFoundException(userErrors.USER_NOT_FOUND);
     const salt = await bcrypt.genSalt();

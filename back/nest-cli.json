@@ -5,6 +5,12 @@
   "compilerOptions": {
     "deleteOutDir": true,
     "assets": ["src/modules/mailing/templates/**/*"],
-    "watchAssets": true
+    "watchAssets": true,
+    "plugins": [{
+      "name": "@nestjs/swagger",
+      "options":{
+        "classValidatorShim": true
+      }
+    }]
   }
 }

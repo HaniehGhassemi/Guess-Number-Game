@@ -17,6 +17,8 @@ import { ResponseDto } from 'src/common/types/response.dto';
 import { RequestResetPassDto } from './dto/request-reset-pass.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ResetPasswordDto } from './dto/reset-password.dto';
+import { SuccessResponseDto } from 'src/common/dto/success-response.dto';
+import { VerifyTokenResponseDto } from './dto/verify-token-response.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -35,23 +37,30 @@ export class AuthController {
   @Post('forget/request')
   requestResetPass(
     @Body() requestDto: requestForgetPassDto,
-  ): Promise<ResponseDto> {
+  ): Promise<SuccessResponseDto> {
     return this.authService.requestForgetPass(requestDto);
   }
 
   @Get('forget/verify')
-  verifyForgetPassLink(@Query('token') token: string): Promise<ResponseDto> {
+  verifyForgetPassLink(
+    @Query('token') token: string,
+  ): Promise<VerifyTokenResponseDto> {
     return this.authService.verifyForgetPassToken(token);
   }
 
   @Post('forget/reset')
-  async resetPasswordByLink(@Body() resetPasswordDto: RequestResetPassDto) {
+  async resetPasswordByLink(
+    @Body() resetPasswordDto: RequestResetPassDto,
+  ): Promise<SuccessResponseDto> {
     return this.authService.resetPasswordByLink(resetPasswordDto);
   }
 
   @Post('auth/reset-password')
   @UseGuards(AuthGuard())
-  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto, @Req() req) {
+  async resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+    @Req() req,
+  ): Promise<SuccessResponseDto> {
     return this.authService.resetPassword(resetPasswordDto, req.user.userId);
   }
 }
