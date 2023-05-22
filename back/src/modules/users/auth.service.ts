@@ -20,6 +20,8 @@ import { MailingService } from '../mailing/mailing.service';
 import { ResponseDto } from 'src/common/types/response.dto';
 import { requestForgetPassDto } from './dto/request-forget-pass.dto';
 import { randomBytes } from 'crypto';
+import { AuthErrors } from './types/auth-errors.enum';
+import { RequestResetPassDto } from './dto/request-reset-pass.dto';
 @Injectable()
 export class AuthService {
   constructor(
@@ -96,8 +98,6 @@ export class AuthService {
     requestDto: requestForgetPassDto,
   ): Promise<ResponseDto> {
     let { email } = requestDto;
-    console.log(email);
-    console.log(typeof email);
     email = email.trim().toLowerCase();
     //check user exist by email
     const user = await this.userService.findUserByEmail(email);
@@ -106,8 +106,6 @@ export class AuthService {
     //generate toekn
     const token = randomBytes(16).toString('hex');
     const expiry = addDays(new Date().toString(), 2);
-    console.log(expiry);
-
     //save token in database
     await this.prisma.client.emailVerification.create({
       data: {
@@ -122,6 +120,61 @@ export class AuthService {
       token,
       requestDto.redirectLink,
     );
+    return {
+      success: true,
+    };
+  }
+
+  async verifyForgetPassToken(token: string): Promise<ResponseDto> {
+    const verifyToken = await this.prisma.client.emailVerification.findFirst({
+      where: {
+        token,
+      },
+    });
+
+    //check verifyToken and its expiry
+    if (!verifyToken || verifyToken.expiry < new Date())
+      throw new UnauthorizedException(AuthErrors.INVALID_TOKEN);
+
+    return {
+      success: true,
+      data: {
+        token,
+      },
+    };
+  }
+
+  async resetPassword(
+    resetPasswordDto: RequestResetPassDto,
+  ): Promise<ResponseDto> {
+    // validate token
+    const verifyToken = await this.prisma.client.emailVerification.findFirst({
+      where: {
+        token: resetPasswordDto.token,
+      },
+    });
+    if (!verifyToken || verifyToken.expiry < new Date())
+      throw new UnauthorizedException(AuthErrors.INVALID_TOKEN);
+    // update user's password
+    const salt = await bcrypt.genSalt();
+    await this.prisma.client.user.update({
+      where: {
+        email: verifyToken.email,
+      },
+      data: {
+        password: await bcrypt.hash(resetPasswordDto.newPassword, salt),
+      },
+    });
+
+    //expire token
+    await this.prisma.client.emailVerification.update({
+      where: {
+        id: verifyToken.id,
+      },
+      data: {
+        expiry: new Date(0),
+      },
+    });
     return {
       success: true,
     };
