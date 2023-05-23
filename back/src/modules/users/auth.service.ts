@@ -1,6 +1,7 @@
 import {
   ForbiddenException,
   Injectable,
+  NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -13,10 +14,24 @@ import { SignUpDto } from './dto/sign-up.dto';
 import * as bcrypt from 'bcrypt';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignInResponseDto } from './dto/sign-in-response.dto';
-
+import { UsersService } from './users.service';
+import { addDays } from 'src/common/utils/date-time.utils';
+import { MailingService } from '../mailing/mailing.service';
+import { requestForgetPassDto } from './dto/request-forget-pass.dto';
+import { randomBytes } from 'crypto';
+import { AuthErrors } from './types/auth-errors.enum';
+import { RequestResetPassDto } from './dto/request-reset-pass.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { SuccessResponseDto } from 'src/common/dto/success-response.dto';
+import { VerifyTokenResponseDto } from './dto/verify-token-response.dto';
 @Injectable()
 export class AuthService {
-  constructor(private jwtService: JwtService, private prisma: PrismaService) {}
+  constructor(
+    private jwtService: JwtService,
+    private prisma: PrismaService,
+    private userService: UsersService,
+    private mailingService: MailingService,
+  ) {}
 
   async generateToken(playload: JwtTokenPayload): Promise<JwtTokenResponse> {
     const token = await this.jwtService.sign(playload);
@@ -79,5 +94,112 @@ export class AuthService {
       return { success: true, data: token };
     }
     throw new UnauthorizedException(userErrors.InValid_Credentials);
+  }
+
+  async requestForgetPass(
+    requestDto: requestForgetPassDto,
+  ): Promise<SuccessResponseDto> {
+    let { email } = requestDto;
+    email = email.trim().toLowerCase();
+    //check user exist by email
+    const user = await this.userService.findUserByEmail(email);
+    if (!user) throw new NotFoundException(userErrors.USER_NOT_FOUND);
+
+    //generate toekn
+    const token = randomBytes(16).toString('hex');
+    const expiry = addDays(new Date().toString(), 2);
+    //save token in database
+    await this.prisma.client.emailVerification.create({
+      data: {
+        email: email,
+        expiry: expiry,
+        token: token,
+      },
+    });
+    //send email
+    await this.mailingService.sendUserConfirmation(
+      user,
+      token,
+      requestDto.redirectLink,
+    );
+    return {
+      success: true,
+    };
+  }
+
+  async verifyForgetPassToken(token: string): Promise<VerifyTokenResponseDto> {
+    const verifyToken = await this.prisma.client.emailVerification.findFirst({
+      where: {
+        token,
+      },
+    });
+
+    //check verifyToken and its expiry
+    if (!verifyToken || verifyToken.expiry < new Date())
+      throw new UnauthorizedException(AuthErrors.INVALID_TOKEN);
+
+    return {
+      success: true,
+      data: {
+        token,
+      },
+    };
+  }
+
+  async resetPasswordByLink(
+    resetPasswordDto: RequestResetPassDto,
+  ): Promise<SuccessResponseDto> {
+    // validate token
+    const verifyToken = await this.prisma.client.emailVerification.findFirst({
+      where: {
+        token: resetPasswordDto.token,
+      },
+    });
+    if (!verifyToken || verifyToken.expiry < new Date())
+      throw new UnauthorizedException(AuthErrors.INVALID_TOKEN);
+    // update user's password
+    const salt = await bcrypt.genSalt();
+    await this.prisma.client.user.update({
+      where: {
+        email: verifyToken.email,
+      },
+      data: {
+        password: await bcrypt.hash(resetPasswordDto.newPassword, salt),
+      },
+    });
+
+    //expire token
+    await this.prisma.client.emailVerification.update({
+      where: {
+        id: verifyToken.id,
+      },
+      data: {
+        expiry: new Date(0),
+      },
+    });
+    return {
+      success: true,
+    };
+  }
+
+  async resetPassword(
+    resetPasswordDto: ResetPasswordDto,
+    userId: number,
+  ): Promise<SuccessResponseDto> {
+    const user = await this.userService.findUserById(userId);
+    if (!user) throw new NotFoundException(userErrors.USER_NOT_FOUND);
+    const salt = await bcrypt.genSalt();
+    await this.prisma.client.user.update({
+      where: {
+        id: user.id,
+      },
+      data: {
+        password: await bcrypt.hash(resetPasswordDto.newPassword, salt),
+      },
+    });
+
+    return {
+      success: true,
+    }
   }
 }
