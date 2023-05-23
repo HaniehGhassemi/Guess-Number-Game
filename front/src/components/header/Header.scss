@@ -8,7 +8,7 @@ header {
   width: 10%;
 }
 .header-container {
-  width: 100%;
+  width: 80%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -52,4 +52,57 @@ header {
 .underline-active:hover {
   border-bottom: 5px solid #a02247;
   color: white !important;
+}
+
+.profile-section {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  color: #979aa1;
+}
+.user-menu-section {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+.username {
+  display: flex;
+}
+.profile-circle {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  outline: 1px solid gray;
+  padding: 2px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #2a2d32;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 3;
+  flex-direction: column;
+  top: 8vh;
+}
+
+.dropdown-content:hover {
+  display: flex;
+}
+
+.dropdown-content a:hover {
+  color: white;
+}
+
+.dropdown-item {
+  padding: 12px 16px;
+}
+
+.dropdown-item:nth-child(3) {
+  border-bottom: 1px solid gray;
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
