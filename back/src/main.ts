@@ -3,9 +3,9 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { AllExceptionsFilter } from './common/utils/all-exception-filter';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
+import { Logger } from 'nestjs-pino';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.setGlobalPrefix('api');
   app.enableCors({
     methods: '*',
@@ -13,7 +13,7 @@ async function bootstrap() {
     allowedHeaders: '*',
     exposedHeaders: '*',
   });
-
+  app.useLogger(app.get(Logger));
   app.useGlobalPipes(
     new ValidationPipe({
       stopAtFirstError: true,

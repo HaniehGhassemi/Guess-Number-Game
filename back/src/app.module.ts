@@ -7,9 +7,18 @@ import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { MailingModule } from './modules/mailing/mailing.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
+    LoggerModule.forRoot({
+      pinoHttp: {
+        transport:
+          process.env.NODE_ENV !== 'production'
+            ? { target: 'pino-pretty' }
+            : undefined,
+      },
+    }),
     MailerModule.forRoot({
       transport: {
         host: process.env.SMTP_HOST,
