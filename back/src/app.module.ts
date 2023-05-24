@@ -8,6 +8,7 @@ import { MailingModule } from './modules/mailing/mailing.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { LoggerModule } from 'nestjs-pino';
+import { GamesModule } from './modules/games/games.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { LoggerModule } from 'nestjs-pino';
     GuessNumberModule,
     UsersModule,
     MailingModule,
+    GamesModule,
   ],
 })
 export class AppModule {}
