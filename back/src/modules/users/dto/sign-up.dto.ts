@@ -1,7 +1,6 @@
 import {
   IsNotEmpty,
   IsEmail,
-  IsStrongPassword,
   IsString,
   MinLength,
   MaxLength,
@@ -24,24 +23,12 @@ export class SignUpDto {
   @IsString({ message: UserServiceValidationError.FULLNAME_ISNOT_STRING })
   @IsNotEmpty({ message: UserServiceValidationError.FULLNAME_IS_EMPTY })
   fullname: string;
-  @IsStrongPassword(
-    {},
-    {
-      message: UserServiceValidationError.PASSWORD_IS_WEAK,
-    },
-  )
   @IsNotEmpty({ message: UserServiceValidationError.PASSWORD_IS_EMPTY })
   password: string;
 
   @Compare('password', {
     message: UserServiceValidationError.PASSWORDS_CONFLICT,
   })
-  @IsStrongPassword(
-    {},
-    {
-      message: UserServiceValidationError.CONFIRM_PASSWORD_IS_WEAK,
-    },
-  )
   @IsNotEmpty({ message: UserServiceValidationError.CONFIRM_PASSWORD_IS_EMPTY })
   confirmPassword: string;
 }
