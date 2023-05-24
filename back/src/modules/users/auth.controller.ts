@@ -13,7 +13,6 @@ import { SignUpDto } from './dto/sign-up.dto';
 import { SignInResponseDto } from './dto/sign-in-response.dto';
 import { SignInDto } from './dto/sign-in.dto';
 import { requestForgetPassDto } from './dto/request-forget-pass.dto';
-import { ResponseDto } from 'src/common/types/response.dto';
 import { RequestResetPassDto } from './dto/request-reset-pass.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ResetPasswordDto } from './dto/reset-password.dto';

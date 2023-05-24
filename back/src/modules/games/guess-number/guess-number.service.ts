@@ -18,11 +18,16 @@ export class GuessNumberService {
   async newGame(userId: string): Promise<newGameResponseDto> {
     //check if session already exist
     const existedGameSession = await this.getGameSession(userId);
-    if (existedGameSession)
+    if (existedGameSession) {
+      const parsedGameSession: GameSession = JSON.parse(existedGameSession);
       return {
         success: true,
-        data: JSON.parse(existedGameSession),
+        data: {
+          chance: parsedGameSession.chance,
+          userAnswer: parsedGameSession.userAnswer,
+        },
       };
+    }
     //create new game session
     const gameSession: GameSession = {
       chance: 5,
@@ -32,7 +37,9 @@ export class GuessNumberService {
     await this.redis.set(userId, serilazedGameSession);
     return {
       success: true,
-      data: gameSession,
+      data: {
+        chance: gameSession.chance,
+      },
     };
   }
 
