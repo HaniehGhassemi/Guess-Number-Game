@@ -62,6 +62,7 @@ export class UsersService {
   }
 
   async findUserByEmail(email: string): Promise<User> {
+    email = email.trim().toLocaleLowerCase();
     return this.prisma.client.user.findFirst({
       where: {
         email: email,
