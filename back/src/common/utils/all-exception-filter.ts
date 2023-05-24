@@ -8,7 +8,7 @@ import {
 import { ResponseDto } from '../types/response.dto';
 import { Response } from 'express';
 import { CommonError } from '../types/common-error.enum';
-
+import { Logger } from '@nestjs/common';
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
@@ -30,6 +30,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
               error: CommonError.INTERNAL_SERVER_ERROR,
             },
     };
+    Logger.error(exception);
     response.status(httpStatus).json(responseBody);
   }
 }
