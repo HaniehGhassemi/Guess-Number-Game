@@ -38,9 +38,7 @@
           id="re-password"
           placeholder="Repeat Password"
         />
-        <button @click="signUp" id="sign-up-btn" class="primary-btn">
-          Sign Up
-        </button>
+        <Button @click="signUp">Sign Up</Button>
       </div>
     </container>
   </AppContainer>

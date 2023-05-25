@@ -5,9 +5,8 @@
         <h1>Sign IN</h1>
         <input
           v-model="signInData"
-          type="text"
           name="signData"
-          id="signData"
+          type="text"
           placeholder="Username or Email"
         />
         <input
@@ -17,10 +16,10 @@
           id="password"
           placeholder="Password"
         />
-        <!-- <button @click="signIn" id="sign-up-btn" class="primary-btn">
-          Sign In
-        </button> -->
-        <Buttons @Click="() => signIn"></Buttons>
+        <a href="/forget-pass"
+          ><span data-id="resetpass-section">Forgot Password?</span></a
+        >
+        <Button @click="signIn">Sign in</Button>
       </div>
     </Container>
   </AppContainer>

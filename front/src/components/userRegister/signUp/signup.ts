@@ -2,29 +2,20 @@ import AppContainer from "@/components/base/AppContainer.vue";
 import Container from "@/components/container/Container.vue";
 import { defineComponent } from "vue";
 import axios from "axios";
-import Buttons from "@/components/Buttons/Buttons.vue";
+import Button from "@/components/Buttons/Button.vue";
 export default defineComponent({
   components: {
     AppContainer,
     Container,
-  },
-  data() {
-    return {
-      fullname: "",
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    };
+    Button,
   },
   methods: {
     async signUp() {
-      const fullname = this.fullname;
-      const username = this.username;
-      const email = this.email;
-      const password = this.password;
-      const confirmPassword = this.confirmPassword;
-      console.log(process.env.VUE_APP_BASE_API_URL);
+      const fullname = "";
+      const username = "";
+      const email = "";
+      const password = "";
+      const confirmPassword = "";
       const result = await axios.post(
         `${process.env.VUE_APP_BASE_API_URL}/auth/signup`,
         {
@@ -38,6 +29,7 @@ export default defineComponent({
       if (result.status == 201) {
         this.$router.push({ name: "SignIn" });
       }
+      console.log(result);
     },
   },
 });
