@@ -14,6 +14,11 @@ import { GamesModule } from './modules/games/games.module';
   imports: [
     LoggerModule.forRoot({
       pinoHttp: {
+        formatters: {
+          level: (label) => {
+            return { level: label.toUpperCase() };
+          },
+        },
         transport:
           process.env.NODE_ENV !== 'production'
             ? { target: 'pino-pretty' }
