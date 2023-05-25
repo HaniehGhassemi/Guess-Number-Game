@@ -18,6 +18,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ResetPasswordDto } from './dto/reset-password.dto';
 import { SuccessResponseDto } from 'src/common/dto/success-response.dto';
 import { VerifyTokenResponseDto } from './dto/verify-token-response.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -53,7 +54,7 @@ export class AuthController {
   ): Promise<SuccessResponseDto> {
     return this.authService.resetPasswordByLink(resetPasswordDto);
   }
-
+  @ApiBearerAuth()
   @Post('auth/reset-password')
   @UseGuards(AuthGuard())
   async resetPassword(
