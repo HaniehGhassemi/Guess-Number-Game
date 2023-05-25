@@ -16,7 +16,7 @@ import { MailingService } from '../mailing/mailing.service';
     JwtModule.register({
       secret: process.env.JWT_SECRET_KEY,
       signOptions: {
-        expiresIn: 3600,
+        expiresIn: '1d',
       },
     }),
     MailingModule,
