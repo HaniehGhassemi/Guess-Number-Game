@@ -5,20 +5,20 @@
         <h1>Resset Password</h1>
         <p>Please enter your new password</p>
         <input
-          v-model="password"
+          v-model="newPassword"
           type="password"
           name="password"
           id="password"
           placeholder="Password"
         />
         <input
-          v-model="repassword"
+          v-model="confirmNewPassword"
           type="password"
           name="repassword"
           id="repassword"
           placeholder="Repassword"
         />
-        <Buttons></Buttons>
+        <Button @click="ressetPass">Submit</Button>
         <br />
         <p id="show-message"></p>
       </div>

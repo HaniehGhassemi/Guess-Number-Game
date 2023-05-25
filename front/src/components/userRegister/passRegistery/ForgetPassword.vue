@@ -1,7 +1,7 @@
 <template>
   <AppContainer>
     <Container>
-      <div class="form-section" id="resetpass-section">
+      <div class="form-section-fp" id="resetpass-section">
         <p>Enter your email to receive the password recovery link</p>
         <input
           v-model="email"
@@ -10,7 +10,7 @@
           id="email"
           placeholder="Email"
         />
-        <Buttons></Buttons>
+        <Button @click="forgetPass">Submit</Button>
         <p id="show-message"></p>
       </div>
     </Container>
