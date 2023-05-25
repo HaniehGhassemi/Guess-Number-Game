@@ -6,7 +6,7 @@
 </template>
 
 <script lang="ts">
-import Header from "@/components/header/Header.vue";
+import Header from "../header/Header.vue";
 export default {
   name: "App-Container",
   components: {
