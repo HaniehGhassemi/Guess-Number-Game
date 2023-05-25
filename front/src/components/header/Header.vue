@@ -22,7 +22,10 @@
       <div class="profile-section w-50">
         <div class="user-menu-section">
           <div class="username">
-            <p id="userFullname"></p>
+            <p id="userFullname" v-if="user != null">
+              {{ user.fullName }}
+            </p>
+            <a id="userFullname" v-else href="/sign-in">Log in</a>
             &nbsp;&nbsp;
           </div>
           <img
@@ -31,23 +34,35 @@
             src="@/assets/images/profile-pic.jpg"
             alt=""
           />
-          <div class="dropdown-content">
+          <div class="dropdown-content" v-if="user != null">
             <div class="dropdown-item" title="Score">
-              <span
-                ><i class="fa-solid fa-star" style="color: #c0c0c0"></i
-              ></span>
-              <span id="userScore"></span>
+              <span id="userRank"
+                ><i
+                  ><fa
+                    class="fa"
+                    icon="fa-solid fa-star"
+                    style="color: #ffffff"
+                  />{{ user.sumScore }}</i
+                ></span
+              >
             </div>
             <div class="dropdown-item" title="Rank">
               <span
-                ><i class="fa-solid fa-medal" style="color: #c0c0c0"></i
-              ></span>
-              <span id="userRank"></span>
+                ><i
+                  ><fa class="fa" icon="fa-solid fa-medal" />{{ user.rank }}</i
+                ></span
+              >
             </div>
             <div class="dropdown-item" title="Number of times played">
-              <span
-                ><i class="fa-solid fa-rotate-right" style="color: #c0c0c0"></i
-              ></span>
+              <span id="userRank"
+                ><i
+                  ><fa
+                    class="fa"
+                    icon="fa-solid fa-rotate-right"
+                    style="color: #ffffff"
+                  />{{ user.playCount }}</i
+                ></span
+              >
               <span id="userPlayCount"></span>
             </div>
             <a href="/resset-pass">Change Password</a>
@@ -60,9 +75,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { getUserInfo } from "@/services/getUserInfo";
+import { defineComponent, onMounted, ref } from "vue";
+
 export default defineComponent({
   name: "Header-vue",
+
+  setup() {
+    const user = ref();
+    onMounted(async () => {
+      const {
+        data: { data: userInfo },
+      } = await getUserInfo();
+      user.value = userInfo;
+    });
+
+    return {
+      user,
+    };
+  },
 });
 </script>
 
