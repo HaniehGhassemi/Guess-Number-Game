@@ -65,7 +65,7 @@ export class AuthService {
       data: {
         username,
         email,
-        fullname: signUpDto.fullname,
+        fullname: signUpDto.fullname.trim(),
         password: hashedPassword,
       },
     });

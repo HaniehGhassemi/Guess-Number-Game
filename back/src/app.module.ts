@@ -7,9 +7,24 @@ import { RedisModule } from '@liaoliaots/nestjs-redis';
 import { MailingModule } from './modules/mailing/mailing.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { LoggerModule } from 'nestjs-pino';
+import { GamesModule } from './modules/games/games.module';
 
 @Module({
   imports: [
+    LoggerModule.forRoot({
+      pinoHttp: {
+        formatters: {
+          level: (label) => {
+            return { level: label.toUpperCase() };
+          },
+        },
+        transport:
+          process.env.NODE_ENV !== 'production'
+            ? { target: 'pino-pretty' }
+            : undefined,
+      },
+    }),
     MailerModule.forRoot({
       transport: {
         host: process.env.SMTP_HOST,
@@ -44,6 +59,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
     GuessNumberModule,
     UsersModule,
     MailingModule,
+    GamesModule,
   ],
 })
 export class AppModule {}

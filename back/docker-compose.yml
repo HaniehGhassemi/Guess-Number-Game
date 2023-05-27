@@ -8,8 +8,7 @@ services:
       - postgres
     env_file: ./.env
     ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
-    # command: sh -c "node ./server/built/app.js"
+      - $NODE_LOCAL_MACHINE_PORT:$NODE_SERVER_PORT
     environment:
       - DB_HOST=postgres
       - DB_USER=$POSTGRES_USER
@@ -18,9 +17,6 @@ services:
       - DB_PORT=$POSTGRES_DB_DOCKER_PORT
       - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:$POSTGRES_DB_DOCKER_PORT/$POSTGRES_DB
     volumes:
-      # for develop purpose
-      # - .:/usr/src/app
-      # ------------------
       - /usr/src/app/node_modules/
     networks:
       - gamenet
@@ -44,6 +40,36 @@ services:
       - 6379:6379
     networks:
       - gamenet
+  elasticsearch:
+        image: "docker.elastic.co/elasticsearch/elasticsearch:7.12.0"
+        environment:
+            - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+            - "discovery.type=single-node"
+        ports:
+            - "9200:9200"
+        volumes:
+            - elasticsearch_data:/usr/share/elasticsearch/data
+        networks:
+          - gamenet
 
+  kibana:
+      image: "docker.elastic.co/kibana/kibana:7.12.0"
+      ports:
+            - "5601:5601"
+      networks:
+        - gamenet
+  filebeat:
+      image: "docker.elastic.co/beats/filebeat:7.12.0"
+      user: root
+      command: filebeat -e -strict.perms=false
+      volumes:
+          - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+          - /var/lib/docker:/var/lib/docker:ro
+          - /var/run/docker.sock:/var/run/docker.sock
+      networks:
+        - gamenet
 networks:
   gamenet:
+
+volumes:
+  elasticsearch_data:
