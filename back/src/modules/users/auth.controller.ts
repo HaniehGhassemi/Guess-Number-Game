@@ -55,7 +55,7 @@ export class AuthController {
     return this.authService.resetPasswordByLink(resetPasswordDto);
   }
   @ApiBearerAuth()
-  @Post('auth/reset-password')
+  @Post('reset-password')
   @UseGuards(AuthGuard())
   async resetPassword(
     @Body() resetPasswordDto: ResetPasswordDto,
