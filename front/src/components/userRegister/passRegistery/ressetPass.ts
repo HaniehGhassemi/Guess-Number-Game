@@ -23,7 +23,7 @@ export default defineComponent({
           },
         });
         const result = await reqInstance.post(
-          `${process.env.VUE_APP_BASE_API_URL}/auth/auth/reset-password`,
+          `${process.env.VUE_APP_BASE_API_URL}/auth/reset-password`,
           {
             newPassword: newPassword.value,
             confirmNewPassword: confirmNewPassword.value,
