@@ -1,0 +1,38 @@
+@import "../assets/fonts/fonts.css";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: rgb(12, 17, 26);
+  font-family: TiltWarp;
+}
+
+.signinFirst {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.register {
+  width: 100%;
+}
+
+.signinFirst p {
+  color: white;
+  margin-bottom: 5%;
+}
+
+.showOption {
+  width: 50%;
+  height: 50%;
+  margin-top: 10%;
+  display: flex;
+  flex-direction: column !important;
+  justify-content: center;
+  align-items: center;
+}

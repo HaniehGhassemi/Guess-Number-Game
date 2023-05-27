@@ -1,0 +1,56 @@
+.games {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20%;
+}
+.logo-container {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 3em;
+  color: #eb0745;
+}
+
+h2 {
+  font-size: 16pt;
+  margin-bottom: 2%;
+  color: #ffffff;
+}
+.show-result {
+  width: 100%;
+  height: 55%;
+  padding-top: 2%;
+}
+
+.resultGame {
+  padding: 1%;
+  width: 100%;
+  font-size: 18pt;
+  color: #ffffff;
+}
+
+label {
+  /* width: 40%;
+    text-align: left; */
+  color: #817e7e;
+  margin-bottom: 2vh;
+  font-size: 11pt;
+}
+
+.game-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 60%;
+}

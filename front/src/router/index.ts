@@ -1,20 +1,53 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import Home from "@/views/Home.vue";
+import SignUp from "@/components/userRegister/signUp/SignUp.vue";
+import SignIn from "@/components/userRegister/signIn/SignIn.vue";
+import RessetPassword from "@/components/userRegister/passRegistery/RessetPassword.vue";
+import ForgetPassword from "@/components/userRegister/passRegistery/ForgetPassword.vue";
+import GuessNumber from "@/components/game/GuessNumber.vue";
+import Game from "../views/Game.vue";
+import UserRegistery from "@/views/UserRegistery.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    name: "home",
-    component: HomeView,
+    name: "Home",
+    component: Home,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/sign-up",
+    name: "SignUp",
+    component: SignUp,
+  },
+  {
+    path: "/sign-in",
+    name: "SignIn",
+    component: SignIn,
+  },
+  {
+    path: "/resset-pass",
+    name: "RessetPassword",
+    component: RessetPassword,
+  },
+  {
+    path: "/forget-pass",
+    name: "ForgetPassword",
+    component: ForgetPassword,
+  },
+  {
+    path: "/guess-number",
+    name: "Guess-Number",
+    component: GuessNumber,
+  },
+  {
+    path: "/start-game",
+    name: "Game",
+    component: Game,
+  },
+  {
+    path: "/user-register",
+    name: "UserRegistery",
+    component: UserRegistery,
   },
 ];
 
