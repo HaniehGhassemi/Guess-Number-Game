@@ -1,0 +1,75 @@
+# docker-compose.yml
+version: "3"
+services:
+  app:
+    restart: on-failure
+    build: .
+    depends_on:
+      - postgres
+    env_file: ./.env
+    ports:
+      - $NODE_LOCAL_MACHINE_PORT:$NODE_SERVER_PORT
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=$POSTGRES_USER
+      - DB_PASSWORD=$POSTGRES_PASSWORD
+      - DB_NAME=$POSTGRES_DB
+      - DB_PORT=$POSTGRES_DB_DOCKER_PORT
+      - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@postgres:$POSTGRES_DB_DOCKER_PORT/$POSTGRES_DB
+    volumes:
+      - /usr/src/app/node_modules/
+    networks:
+      - gamenet
+  postgres:
+    image: postgres:11
+    env_file: ./.env
+    ports:
+      - $POSTGRES_DB_LOCAL_PORT:$POSTGRES_DB_DOCKER_PORT
+    environment:
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+      POSTGRES_DB: $POSTGRES_DB
+
+    volumes:
+       - ./data:/var/lib/postgresql/data
+    networks:
+      - gamenet
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - 6379:6379
+    networks:
+      - gamenet
+  elasticsearch:
+        image: "docker.elastic.co/elasticsearch/elasticsearch:7.12.0"
+        environment:
+            - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
+            - "discovery.type=single-node"
+        ports:
+            - "9200:9200"
+        volumes:
+            - elasticsearch_data:/usr/share/elasticsearch/data
+        networks:
+          - gamenet
+
+  kibana:
+      image: "docker.elastic.co/kibana/kibana:7.12.0"
+      ports:
+            - "5601:5601"
+      networks:
+        - gamenet
+  filebeat:
+      image: "docker.elastic.co/beats/filebeat:7.12.0"
+      user: root
+      command: filebeat -e -strict.perms=false
+      volumes:
+          - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+          - /var/lib/docker:/var/lib/docker:ro
+          - /var/run/docker.sock:/var/run/docker.sock
+      networks:
+        - gamenet
+networks:
+  gamenet:
+
+volumes:
+  elasticsearch_data:
