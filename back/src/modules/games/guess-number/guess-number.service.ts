@@ -8,12 +8,16 @@ import { PrismaService } from 'src/modules/global/services/prisma/prisma.service
 import { CheckAnswerDto } from './dto/check-answer.dto';
 import { checkAnswerResponseDto } from './dto/check-answer-response.dto';
 import { guessNumberMessages } from './types/guess-number-messages.enum';
+import { UserGateWay } from 'src/modules/users/user-gateway';
+import { UsersService } from 'src/modules/users/users.service';
 
 @Injectable()
 export class GuessNumberService {
   constructor(
     @InjectRedis() private readonly redis: Redis,
     private prisma: PrismaService,
+    private userGateWay: UserGateWay,
+    private userService: UsersService,
   ) {}
   async newGame(userId: string): Promise<newGameResponseDto> {
     //check if session already exist
@@ -61,6 +65,11 @@ export class GuessNumberService {
       });
       //delete session
       await this.deleteGameSession(userId);
+      //emit user info
+      const userInfo = JSON.stringify(
+        await this.userService.getUserInfo(+userId),
+      );
+      this.userGateWay.emitUserInfo(userId, userInfo);
       return {
         success: true,
         data: {
