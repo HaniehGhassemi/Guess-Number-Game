@@ -7,14 +7,13 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserGateWayConstants } from './types/user-gateway.enum';
 @WebSocketGateway({
   cors: true,
 })
 export class UserGateWay
   implements OnModuleInit, OnGatewayConnection, OnGatewayDisconnect
 {
-  constructor(private userService: UsersService) {}
   @WebSocketServer()
   server: Server;
   onModuleInit() {
@@ -24,7 +23,7 @@ export class UserGateWay
   async handleConnection(client: Socket) {
     //room here will be the userId
     //each user is added to a room
-    client.on('join', function (room: string) {
+    client.on(UserGateWayConstants.JOIN_ROOM_ON, function (room: string) {
       client.join(room);
       Logger.log(`${client.id} connected to room: ${room}`);
     });
@@ -34,6 +33,8 @@ export class UserGateWay
   }
 
   emitUserInfo(userId: string, userInfo: string) {
-    this.server.to(userId).emit('get-user-info', userInfo);
+    this.server
+      .to(userId)
+      .emit(UserGateWayConstants.GET_USER_INFO_EVENT, userInfo);
   }
 }
