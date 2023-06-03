@@ -9,6 +9,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/common/utils/jwt.strategy';
 import { MailingModule } from '../mailing/mailing.module';
 import { MailingService } from '../mailing/mailing.service';
+import { UserGateWay } from './user-gateway';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { MailingService } from '../mailing/mailing.service';
     PrismaService,
     JwtStrategy,
     MailingService,
+    UserGateWay,
   ],
 })
 export class UsersModule {}

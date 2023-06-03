@@ -9,9 +9,13 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { LoggerModule } from 'nestjs-pino';
 import { GamesModule } from './modules/games/games.module';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 @Module({
   imports: [
+    PrometheusModule.register({
+      path: 'http://localhost:9090/metrics',
+    }),
     LoggerModule.forRoot({
       pinoHttp: {
         formatters: {
