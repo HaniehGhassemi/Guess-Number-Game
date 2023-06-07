@@ -1,6 +1,6 @@
 <template>
   <AppContainer>
-    <Container v-if="user != null">
+    <Container>
       <div class="gameEvent" id="gameEvent">
         <div class="event-content">
           <h1 id="headline">Do you want play?</h1>
@@ -12,25 +12,15 @@
         </div>
       </div>
     </Container>
-    <container v-else>
-      <div class="register">
-        <p>Please Sign In first</p>
-        <div class="event-btns">
-          <Button><a href="/sign-in">Sign in</a></Button>
-          <Button><a href="/sign-up">Sign up</a></Button>
-        </div>
-      </div>
-    </container>
   </AppContainer>
 </template>
 
 <script lang="ts">
 import AppContainer from "../components/base/AppContainer.vue";
-import Container from "../components/container/Container.vue";
 import Button from "@/components/Buttons/Button.vue";
 import { getUserInfo } from "@/services/getUserInfo";
-
 import { defineComponent, ref, onMounted } from "vue";
+import Container from "@/components/container/Container.vue";
 
 export default defineComponent({
   name: "Start-Game",
