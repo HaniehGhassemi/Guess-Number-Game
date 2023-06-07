@@ -1,4 +1,12 @@
 @font-face {
-  font-family: TiltWarp;
-  src: url("./TiltWarp-Regular.ttf");
+  font-family: light;
+  src: url("./Geologica-Light.ttf");
+}
+@font-face {
+  font-family: medium;
+  src: url("./Geologica-Medium.ttf");
+}
+@font-face {
+  font-family: bold;
+  src: url("./Geologica-SemiBold.ttf");
 }
