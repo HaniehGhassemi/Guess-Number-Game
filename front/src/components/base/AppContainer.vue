@@ -1,27 +1,26 @@
 <template>
   <div class="app-container">
+    <SidebarVue></SidebarVue>
     <div class="box-section">
-      <SidebarVue></SidebarVue>
+      <Header></Header>
+      <MainContainer>
+        <slot></slot>
+      </MainContainer>
     </div>
-    <div class="header"></div>
-    <div class="main-container">
-      <div class="slider"></div>
-      <div class="topplayer"></div>
-
-      <div class="body"></div>
-      <div class="body"></div>
-      <div class="body"></div>
-    </div>
-    <slot></slot>
   </div>
 </template>
 
 <script lang="ts">
 import SidebarVue from "../sidebar/Sidebar.vue";
+import Header from "../header/Header.vue";
+import MainContainer from "./MainContainer.vue";
+
 export default {
   name: "App-Container",
   components: {
     SidebarVue,
+    Header,
+    MainContainer,
   },
 };
 </script>

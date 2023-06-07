@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="players-container">
     <slot></slot>
   </div>
 </template>

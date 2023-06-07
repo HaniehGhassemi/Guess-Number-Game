@@ -1,12 +1,15 @@
+@import "../../assets/fonts/fonts.css";
 .buttons {
-  width: 40%;
+  width: 220px;
   height: 50px;
-  font-family: TiltWarp;
+  font-family: bold;
   font-size: medium;
-  color: white;
-  background-color: #eb0745;
+  color: #fff;
+  background-color: #db1349;
   outline: none;
   border: none;
-  border-radius: 25px;
+  border-radius: 40px;
   cursor: pointer;
+  margin-top: 1%;
+  margin-bottom: 1%;
 }
