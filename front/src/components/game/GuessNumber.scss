@@ -41,7 +41,15 @@
   text-align: center;
   input {
     width: 220px;
-    margin-bottom: 1%;
+    height: 50px;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: medium;
+    margin-bottom: 2%;
   }
   input ::placeholder {
     color: rgba(255, 255, 255, 0.917);
@@ -62,5 +70,16 @@
     font-family: bold;
     font-size: 30px;
     margin-bottom: 1%;
+  }
+  .play-agian {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    a {
+      display: block;
+      text-decoration: none;
+      color: #fff;
+    }
   }
 }

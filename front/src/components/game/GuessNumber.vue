@@ -1,6 +1,6 @@
 <template>
   <AppContainer>
-    <Container>
+    <Container v-if="res != undefined && res?.randomNumber == null">
       <div class="game-title">
         <div style="width: 100%">
           <h2>I am thinking of a number Between 0-100</h2>
@@ -23,6 +23,17 @@ Your Guess is {{ res?.userAnswer }}</pre
         <pre class="answer-result" v-if="res?.chance != null">
 Remaining Chances {{ res?.chance }}</pre
         >
+      </div>
+    </Container>
+    <Container v-else>
+      <div class="game-result">
+        <pre
+          class="answer-result">{{ errorMessage }}<br> The Number was {{res?.randomNumber}}</pre>
+        <pre class="answer-result">Do you want to play again?</pre>
+        <div class="play-agian">
+          <Button><a href="/guess-number">Yes</a></Button>
+          <Button><a href="/">No</a></Button>
+        </div>
       </div>
     </Container>
   </AppContainer>
@@ -97,8 +108,6 @@ export default defineComponent({
               userAnswer: +guess.value,
             }
           );
-          console.log(rescheckAnswer);
-
           const {
             data: { data },
           } = rescheckAnswer;
@@ -117,7 +126,6 @@ export default defineComponent({
         errorMessage.value = errr;
       }
     }
-
     onMounted(async () => {
       const {
         data: { data: userInfo },
