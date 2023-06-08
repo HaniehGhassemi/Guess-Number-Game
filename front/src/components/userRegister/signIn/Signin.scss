@@ -1,0 +1,65 @@
+@import "@/assets/fonts/fonts.css";
+
+.signin-section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  a {
+    text-decoration: none;
+    color: #fff;
+    font-family: medium;
+    margin-top: 2%;
+    font-size: 18px;
+  }
+}
+.signin-title {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+
+  h1 {
+    font-family: bold;
+    font-size: 3em;
+    color: #db1349;
+    margin-bottom: 2%;
+  }
+}
+.signin-form {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  input {
+    width: 220px;
+    height: 50px;
+    border-radius: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: medium;
+    margin-bottom: 2%;
+  }
+  input ::placeholder {
+    color: rgba(255, 255, 255, 0.917);
+    text-align: center;
+  }
+}
+
+.signin-error {
+  width: 100%;
+  height: 10%;
+  color: #db1349;
+  font-family: medium;
+  font-size: 23px;
+}
