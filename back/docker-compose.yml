@@ -68,8 +68,31 @@ services:
           - /var/run/docker.sock:/var/run/docker.sock
       networks:
         - gamenet
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - prometheus_data:/prometheus
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - '9090:9090'
+    networks:
+      - gamenet
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - grafana_data:/var/lib/grafana
+    networks:
+    - gamenet
 networks:
   gamenet:
 
 volumes:
   elasticsearch_data:
+  prometheus_data: {}
+  grafana_data: {}

@@ -16,6 +16,10 @@ Then fill the .env file variables with the appropriate values
 ```bash
 # start docker containers: app, postgreSQL, redis, elasticsearch, kibana, filebeat
 $ docker compose up -d
+
+# initial database
+$ yarn prisma migrate deploy --schema=src/prisma/schema.prisma
+
 # development
 $ npm run start
 
