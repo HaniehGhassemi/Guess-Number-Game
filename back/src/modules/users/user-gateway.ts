@@ -12,12 +12,15 @@ import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common/services';
 import { UserGateWayConstants } from './types/user-gateway.enum';
 import { WsGuard } from 'src/common/utils/wsGuard';
+import { InjectMetric } from '@willsoto/nestjs-prometheus';
+import { Gauge } from 'prom-client';
 @WebSocketGateway({
   cors: true,
 })
 export class UserGateWay
   implements OnModuleInit, OnGatewayConnection, OnGatewayDisconnect
 {
+  constructor(@InjectMetric('user_loggined') public counter: Gauge<string>) {}
   @WebSocketServer()
   server: Server;
   onModuleInit() {
@@ -28,6 +31,7 @@ export class UserGateWay
     Logger.log(`client ${client.id} connected`);
   }
   handleDisconnect(client: Socket) {
+    this.counter.dec();
     Logger.log(`${client.id} disconnected`);
   }
 
@@ -40,6 +44,7 @@ export class UserGateWay
     //room here will be the userId
     //each user is added to a room
     client.join(room.toString());
+    this.counter.inc(1);
   }
 
   emitUserInfo(userId: string, userInfo: string) {

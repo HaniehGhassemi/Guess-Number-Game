@@ -7,6 +7,7 @@ import { JwtStrategy } from 'src/common/utils/jwt.strategy';
 import { PrismaService } from 'src/modules/global/services/prisma/prisma.service';
 import { UserGateWay } from 'src/modules/users/user-gateway';
 import { UsersService } from 'src/modules/users/users.service';
+import { makeGaugeProvider } from '@willsoto/nestjs-prometheus';
 
 @Module({
   imports: [
@@ -25,6 +26,10 @@ import { UsersService } from 'src/modules/users/users.service';
     PrismaService,
     UserGateWay,
     UsersService,
+    makeGaugeProvider({
+      name: 'user_loggined',
+      help: 'user_loggined_help',
+    })
   ],
 })
 export class GuessNumberModule {}
