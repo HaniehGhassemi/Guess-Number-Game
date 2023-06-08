@@ -13,9 +13,7 @@ import { PrometheusModule } from '@willsoto/nestjs-prometheus';
 
 @Module({
   imports: [
-    PrometheusModule.register({
-      path: 'http://localhost:9090/metrics',
-    }),
+    PrometheusModule.register(),
     LoggerModule.forRoot({
       pinoHttp: {
         formatters: {
