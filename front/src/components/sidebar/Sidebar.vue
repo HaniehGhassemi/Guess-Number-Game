@@ -12,17 +12,20 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <button @click="redirectUser">
             <span class="material-symbols-rounded"> stadia_controller </span>
-          </a>
+          </button>
         </li>
         <li>
-          <a href="#" @click="redirectUser">
+          <a href="#">
             <span class="material-symbols-rounded"> workspace_premium </span>
           </a>
         </li>
         <li>
-          <a href="#">
+          <a
+            href="https://miro.com/welcomeonboard/SkZKaDhhRml5UVIySW9vZnBIUjRYcEhMcnBaaGtjUk1nRFlQNU42ZERjZUk5bmN1RW8zWW11azlKOHRoOThRTXwzNDU4NzY0NTQ0MjY2ODUzMzQyfDI=?share_link_id=113508448300"
+            target="_blank"
+          >
             <span class="material-symbols-rounded"> account_tree </span>
           </a>
         </li>
@@ -37,29 +40,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
-import { getUserInfo } from "@/services/getUserInfo";
+import { defineComponent, onMounted, ref } from "vue";
+import router from "@/router";
 
 export default defineComponent({
   name: "Sidebar-vue",
   setup() {
-    const user = ref();
     async function redirectUser() {
-      let routes = [];
-      if (user.value != null) {
-        routes = [{ path: "/guess-number" }];
+      if (localStorage.getItem("token")) {
+        router.push({ name: "Guess-Number" });
+      } else {
+        console.log("mishe vli nsode");
+        router.push({ name: "SignIn" });
       }
-      routes = [{ path: "/user-register" }];
     }
-
-    onMounted(async () => {
-      const {
-        data: { data: userInfo },
-      } = await getUserInfo();
-      user.value = userInfo;
-    });
     return {
-      user,
       redirectUser,
     };
   },

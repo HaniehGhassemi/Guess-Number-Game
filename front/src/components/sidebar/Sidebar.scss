@@ -20,6 +20,19 @@
   span {
     font-size: 27px;
   }
+
+  button {
+    background-color: transparent;
+    color: #fff;
+    border: none;
+    margin-bottom: 40px;
+  }
+  button :hover {
+    color: #db1349;
+  }
+  button :focus {
+    color: #db1349;
+  }
 }
 .list-style a {
   display: block;
