@@ -1,28 +1,28 @@
 <template>
   <AppContainer>
     <Container>
-      <div class="games">
-        <div class="logo-container">
-          <h1>Guess Number</h1>
-          <div style="width: 100%">
-            <br /><br />
-            <h2>I am thinking of a number Between 0-100<br /></h2>
-            <h2>Can you Guess it?</h2>
-          </div>
+      <div class="game-title">
+        <div style="width: 100%">
+          <h2>I am thinking of a number Between 0-100</h2>
+          <span style="--i: 1">Can&nbsp;</span>
+          <span style="--i: 2">You&nbsp;</span>
+          <span style="--i: 3">Guess&nbsp;</span>
+          <span style="--i: 4">it?</span>
         </div>
-        <div class="game-container">
-          <input v-model="guess" id="guessinput" type="text" />
-          <label id="errorMessage" class="error"></label>
-          <Button @click="checkAnswer">Submit</Button>
-        </div>
-        <div class="show-result">
-          <pre class="resultGame" v-if="res != null">
+      </div>
+      <div class="game-form">
+        <input v-model="guess" id="guessinput" type="text" placeholder="0" />
+        <label id="errorMessage" class="error"></label>
+        <Button @click="checkAnswer">Submit</Button>
+      </div>
+      <div class="game-result">
+        <pre class="answer-result">{{ errorMessage }}</pre>
+        <pre class="answer-result" v-if="res?.userAnswer != undefined">
 Your Guess is {{ res?.userAnswer }}</pre
-          >
-          <pre class="resultGame" v-if="res != null">
+        >
+        <pre class="answer-result" v-if="res?.chance != null">
 Remaining Chances {{ res?.chance }}</pre
-          >
-        </div>
+        >
       </div>
     </Container>
   </AppContainer>
@@ -30,11 +30,13 @@ Remaining Chances {{ res?.chance }}</pre
 
 <script lang="ts">
 import AppContainer from "@/components/base/AppContainer.vue";
-import Container from "@/components/container/Container.vue";
 import Button from "@/components/Buttons/Button.vue";
 import { defineComponent, onMounted, ref } from "vue";
 import axios from "axios";
 import { getUserInfo } from "@/services/getUserInfo";
+import Container from "@/components/container/Container.vue";
+import router from "@/router";
+import { gerErrorMessage } from "@/services/ErrorHandling";
 
 export default defineComponent({
   name: "Guess-Number",
@@ -52,42 +54,69 @@ export default defineComponent({
     const user = ref();
     const res = ref();
     const guess = ref();
+    const errorMessage = ref("");
+
     async function newGame() {
-      if (localStorage.getItem("token")) {
-        const reqInstance = axios.create({
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        const result = await reqInstance.post(
-          `${process.env.VUE_APP_BASE_API_URL}/guess-number/new-game`
-        );
-        console.log(result);
-        return result;
+      try {
+        if (localStorage.getItem("token")) {
+          const reqInstance = axios.create({
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          const result = await reqInstance.post(
+            `${process.env.VUE_APP_BASE_API_URL}/guess-number/new-game`
+          );
+          const {
+            data: { data },
+          } = result;
+          res.value = data;
+        } else {
+          router.push({ name: "SignIn" });
+        }
+      } catch (error: any) {
+        const message: string = Array.isArray(error.response.data.data.message)
+          ? error.response.data.data.message[0]
+          : error.response.data.data.message;
+        const errr: string = gerErrorMessage(message);
+        errorMessage.value = errr;
       }
     }
     async function checkAnswer() {
-      const reqInstance = axios.create({
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const rescheckAnswer = await reqInstance.post(
-        `${process.env.VUE_APP_BASE_API_URL}/guess-number/check-answer`,
-        {
-          gameId: 1,
-          userAnswer: +guess.value,
+      try {
+        if (localStorage.getItem("token")) {
+          const reqInstance = axios.create({
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          const rescheckAnswer = await reqInstance.post(
+            `${process.env.VUE_APP_BASE_API_URL}/guess-number/check-answer`,
+            {
+              gameId: 1,
+              userAnswer: +guess.value,
+            }
+          );
+          console.log(rescheckAnswer);
+
+          const {
+            data: { data },
+          } = rescheckAnswer;
+          const message: string = rescheckAnswer.data.data.message;
+          const errr: string = gerErrorMessage(message);
+          errorMessage.value = errr;
+          res.value = data;
+        } else {
+          router.push({ name: "SignIn" });
         }
-      );
-      console.log(rescheckAnswer);
-
-      const {
-        data: { data },
-      } = rescheckAnswer;
-
-      res.value = data;
+      } catch (error: any) {
+        const message: string = Array.isArray(error.response.data.data.message)
+          ? error.response.data.data.message[0]
+          : error.response.data.data.message;
+        const errr: string = gerErrorMessage(message);
+        errorMessage.value = errr;
+      }
     }
-    console.log("this is", res);
 
     onMounted(async () => {
       const {
@@ -100,9 +129,10 @@ export default defineComponent({
     return {
       user,
       guess,
-      newGame,
       checkAnswer,
       res,
+      newGame,
+      errorMessage,
     };
   },
 });
