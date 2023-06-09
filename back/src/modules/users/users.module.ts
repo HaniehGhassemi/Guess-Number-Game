@@ -32,8 +32,8 @@ import { makeGaugeProvider } from '@willsoto/nestjs-prometheus';
     MailingService,
     UserGateWay,
     makeGaugeProvider({
-      name: 'user_loggined',
-      help: 'user_loggined_help',
+      name: 'connected_client_websocket',
+      help: 'number of connected client to websocket server',
     })
   ],
 })

@@ -9,16 +9,16 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { LoggerModule } from 'nestjs-pino';
 import { GamesModule } from './modules/games/games.module';
-import {
-  PrometheusModule,
-  makeGaugeProvider ,
-} from '@willsoto/nestjs-prometheus';
+import { PrometheusModule } from '@willsoto/nestjs-prometheus';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     PrometheusModule.register(),
     LoggerModule.forRoot({
       pinoHttp: {
+        autoLogging: false,
         formatters: {
           level: (label) => {
             return { level: label.toUpperCase() };
@@ -65,6 +65,6 @@ import {
     UsersModule,
     MailingModule,
     GamesModule,
-  ]
+  ],
 })
 export class AppModule {}

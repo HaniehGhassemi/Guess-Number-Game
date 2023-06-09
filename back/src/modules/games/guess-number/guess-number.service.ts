@@ -8,15 +8,17 @@ import { PrismaService } from 'src/modules/global/services/prisma/prisma.service
 import { CheckAnswerDto } from './dto/check-answer.dto';
 import { checkAnswerResponseDto } from './dto/check-answer-response.dto';
 import { guessNumberMessages } from './types/guess-number-messages.enum';
-import { UserGateWay } from 'src/modules/users/user-gateway';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { UsersService } from 'src/modules/users/users.service';
+import { Logger } from '@nestjs/common/services';
+import { UserGateWayConstants } from 'src/modules/users/types/user-gateway.enum';
 
 @Injectable()
 export class GuessNumberService {
   constructor(
+    private eventEmitter: EventEmitter2,
     @InjectRedis() private readonly redis: Redis,
     private prisma: PrismaService,
-    private userGateWay: UserGateWay,
     private userService: UsersService,
   ) {}
   async newGame(userId: string): Promise<newGameResponseDto> {
@@ -24,6 +26,7 @@ export class GuessNumberService {
     const existedGameSession = await this.getGameSession(userId);
     if (existedGameSession) {
       const parsedGameSession: GameSession = JSON.parse(existedGameSession);
+      Logger.log(parsedGameSession.randomNumber);
       return {
         success: true,
         data: {
@@ -37,6 +40,7 @@ export class GuessNumberService {
       chance: 5,
       randomNumber: +(Math.random() * 100).toFixed(0),
     };
+    Logger.log(gameSession.randomNumber);
     const serilazedGameSession: string = JSON.stringify(gameSession);
     await this.redis.set(userId, serilazedGameSession);
     return {
@@ -63,13 +67,14 @@ export class GuessNumberService {
         userId: +userId,
         score,
       });
+      //emit user info
+      const userInfo = await this.userService.getUserInfo(+userId);
+      this.eventEmitter.emitAsync(
+        UserGateWayConstants.SEND_USER_INFO_EVENT,
+        userInfo,
+      );
       //delete session
       await this.deleteGameSession(userId);
-      //emit user info
-      const userInfo = JSON.stringify(
-        await this.userService.getUserInfo(+userId),
-      );
-      this.userGateWay.emitUserInfo(userId, userInfo);
       return {
         success: true,
         data: {
