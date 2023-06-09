@@ -5,7 +5,6 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/common/utils/jwt.strategy';
 import { PrismaService } from 'src/modules/global/services/prisma/prisma.service';
-import { UserGateWay } from 'src/modules/users/user-gateway';
 import { UsersService } from 'src/modules/users/users.service';
 
 @Module({
@@ -19,12 +18,6 @@ import { UsersService } from 'src/modules/users/users.service';
     }),
   ],
   controllers: [GuessNumberController],
-  providers: [
-    GuessNumberService,
-    JwtStrategy,
-    PrismaService,
-    UserGateWay,
-    UsersService,
-  ],
+  providers: [GuessNumberService, JwtStrategy, PrismaService, UsersService],
 })
 export class GuessNumberModule {}

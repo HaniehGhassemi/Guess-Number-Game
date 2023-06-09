@@ -10,6 +10,7 @@ import { JwtStrategy } from 'src/common/utils/jwt.strategy';
 import { MailingModule } from '../mailing/mailing.module';
 import { MailingService } from '../mailing/mailing.service';
 import { UserGateWay } from './user-gateway';
+import { makeGaugeProvider } from '@willsoto/nestjs-prometheus';
 
 @Module({
   imports: [
@@ -30,6 +31,10 @@ import { UserGateWay } from './user-gateway';
     JwtStrategy,
     MailingService,
     UserGateWay,
+    makeGaugeProvider({
+      name: 'connected_client_websocket',
+      help: 'number of connected client to websocket server',
+    })
   ],
 })
 export class UsersModule {}
