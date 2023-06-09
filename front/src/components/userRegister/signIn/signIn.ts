@@ -1,16 +1,15 @@
 import AppContainer from "@/components/base/AppContainer.vue";
-import Container from "@/components/container/Container.vue";
 import { defineComponent, onMounted, ref } from "vue";
 import axios from "axios";
 import Button from "@/components/Buttons/Button.vue";
 import router from "@/router";
 import { gerErrorMessage } from "@/services/ErrorHandling";
+import { webSocket } from "@/services/userInfo";
 
 export default defineComponent({
   name: "SignIn",
   components: {
     AppContainer,
-    Container,
     Button,
   },
   setup() {
@@ -28,6 +27,14 @@ export default defineComponent({
         );
         if (result.status === 201) {
           localStorage.setItem("token", result.data.data.token);
+          // socket.connect();
+          // socket.emit("join", result.data.data.userId);
+
+          const socketHanddler = new webSocket(result.data.data.token);
+
+          socketHanddler.connect();
+          socketHanddler.join(result.data.data.userId);
+          // socket.emit("join", userdata.userId);
           router.push({ name: "Home" });
         }
       } catch (error: any) {
