@@ -54,6 +54,11 @@ export class UserGateWay
   async handleJoinEvent() {
     Logger.log(`login event recived`);
   }
+  @UseGuards(WsGuard)
+  @SubscribeMessage(UserGateWayConstants.GET_USER_INFO)
+  async handleGetUserInfoEvent() {
+    Logger.log('get user info event recived')
+  }
   @OnEvent(UserGateWayConstants.SEND_USER_INFO_EVENT)
   listentToEvent(msg: GetUserInfo) {
     this.server
