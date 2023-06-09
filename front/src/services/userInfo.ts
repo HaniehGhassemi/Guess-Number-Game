@@ -18,9 +18,5 @@ export class socketHandler {
     this.socket.on("disconnect", () => {
       console.log("disconnect");
     });
-
-    this.socket.on("res-user-info", (args: any) => {
-      console.log(args);
-    });
   }
 }

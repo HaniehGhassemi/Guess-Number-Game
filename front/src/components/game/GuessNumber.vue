@@ -1,6 +1,9 @@
 <template>
-  <AppContainer v-if="res != undefined && res?.randomNumber == null">
-    <div class="game-section">
+  <AppContainer>
+    <div
+      class="game-section"
+      v-if="res != undefined && res?.randomNumber == null"
+    >
       <div class="game-title">
         <div style="width: 100%">
           <h2>I am thinking of a number Between 0-100</h2>
@@ -30,9 +33,7 @@
         >
       </div>
     </div>
-  </AppContainer>
-  <AppContainer v-else>
-    <div class="game-section">
+    <div class="game-section" v-else>
       <div class="game-result">
         <pre
           class="answer-result">{{ errorMessage }}<br> The Number was {{res?.randomNumber}}</pre>

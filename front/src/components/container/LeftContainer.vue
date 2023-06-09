@@ -14,8 +14,8 @@
           :src="require(`../../assets/images/avatar/${randomPic}.jpg`)"
           alt=""
         />
-        <h3>{{ user?.fullName }}</h3>
-        <p>@{{ user?.userName }}</p>
+        <h3>{{ user?.data.fullName }}</h3>
+        <p>@{{ user?.data.userName }}</p>
       </div>
       <div class="user-data">
         <table>
@@ -25,9 +25,9 @@
             <th>Replay</th>
           </tr>
           <tr>
-            <td>{{ user?.rank }}</td>
-            <td>{{ user?.sumScore }}</td>
-            <td>{{ user?.playCount }}</td>
+            <td>{{ user?.data.rank }}</td>
+            <td>{{ user?.data.sumScore }}</td>
+            <td>{{ user?.data.playCount }}</td>
           </tr>
         </table>
         <p>
@@ -55,14 +55,29 @@
 </template>
 
 <script lang="ts">
-import { getUserInfo } from "@/services/getUserInfo";
 import { onMounted, ref } from "vue";
+import { socketHandler } from "@/services/userInfo";
 export default {
   name: "Container-box",
   components: {},
 
   setup() {
     const user = ref();
+    async function connectWebSocket() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const socketInstance = new socketHandler(token);
+        socketInstance.socket.connect();
+        socketInstance.socket.emit("login", null);
+        socketInstance.socket.on("res-user-info", (args: any) => {
+          console.log(args);
+          user.value = args;
+          console.log("test2", user);
+        });
+      }
+    }
+    console.log("test1", user);
+
     const profilePic = [
       "pro-1",
       "pro-2",
@@ -79,15 +94,13 @@ export default {
     ];
     const random = Math.floor(Math.random() * profilePic.length);
     const randomPic = profilePic[random];
-    onMounted(async () => {
-      const {
-        data: { data: userInfo },
-      } = await getUserInfo();
-      user.value = userInfo;
+    onMounted(() => {
+      connectWebSocket();
     });
     return {
       user,
       randomPic,
+      connectWebSocket,
     };
   },
 };
