@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export function getUserInfo() {
   if (localStorage.getItem("token")) {
     const reqInstance = axios.create({

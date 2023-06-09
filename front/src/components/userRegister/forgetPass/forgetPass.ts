@@ -1,15 +1,12 @@
 import { defineComponent, ref } from "vue";
 import axios from "axios";
 import AppContainer from "../../base/AppContainer.vue";
-import Container from "@/components/container/Container.vue";
 import Button from "../../Buttons/Button.vue";
 import { gerErrorMessage } from "@/services/ErrorHandling";
-import router from "@/router";
 export default defineComponent({
   name: "ForgetPass",
   components: {
     AppContainer,
-    Container,
     Button,
   },
   setup() {

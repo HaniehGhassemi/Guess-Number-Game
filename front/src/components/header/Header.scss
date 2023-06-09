@@ -2,39 +2,100 @@
 
 header {
   width: 100%;
-  height: 8%;
+  height: 7%;
   display: flex;
   align-items: center;
   justify-content: center;
-  h1 {
-    width: 90%;
-    height: 70%;
-    font-family: bold;
-    font-size: 35px;
-    color: #ffffff;
-    padding-left: 2%;
-    padding-top: 1%;
-  }
+}
+.header-items-sections {
+  width: 94%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
+.header-title {
+  height: 100%;
+  width: 60%;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+
+  h1 {
+    font-family: bold;
+    font-size: 35px;
+    color: #424a57;
+  }
+}
 .header-icons {
-  margin-bottom: 20px;
-  width: 10%;
+  width: 40%;
   height: 70%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: right;
   align-items: center;
-  padding-right: 4%;
-  padding-top: 3%;
 
   span {
     width: 10%;
-    color: #fff;
-    font-size: 27px;
-    margin-right: 60px;
+    color: #424a57;
+    font-size: 2.5rem;
   }
-  a:hover span {
-    color: #db1349;
+  span:hover {
+    color: #4f45e4;
   }
+}
+
+.dropdown {
+  position: relative;
+  right: 0;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: rgba(80, 69, 228, 0.531);
+  border-radius: 20px;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.163);
+  z-index: 1;
+  right: 0%;
+  top: 90%;
+  button {
+    background-color: transparent;
+    float: none;
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-family: light;
+    text-align: left;
+    a {
+      float: none;
+      font-size: 15px;
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      font-family: light;
+      text-align: center;
+    }
+  }
+}
+
+.dropdown-content a {
+  float: none;
+  color: rgb(255, 255, 255);
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  font-family: light;
+}
+.dropdown:hover .dropdown-content {
+  display: flex;
+  height: 10vh;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  border: 0.01rem solid #4f45e4;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }

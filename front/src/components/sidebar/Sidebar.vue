@@ -17,11 +17,6 @@
           </button>
         </li>
         <li>
-          <a href="#">
-            <span class="material-symbols-rounded"> workspace_premium </span>
-          </a>
-        </li>
-        <li>
           <a
             href="https://miro.com/welcomeonboard/SkZKaDhhRml5UVIySW9vZnBIUjRYcEhMcnBaaGtjUk1nRFlQNU42ZERjZUk5bmN1RW8zWW11azlKOHRoOThRTXwzNDU4NzY0NTQ0MjY2ODUzMzQyfDI=?share_link_id=113508448300"
             target="_blank"

@@ -1,7 +1,7 @@
 export const errors = new Map<string, string>([
   ["ANSWER_TOO_HIGH", "Your Guess is too High"],
   ["USERNAME_IS_EMPTY", "Username is empty"],
-  ["ANSWER_TOO_LOW", "Your Guess is too High"],
+  ["ANSWER_TOO_LOW", "Your Guess is too Low"],
   ["ANSWER_CORRECT", "Yehhh You Won!!"],
   ["USER_LOSE", "You Lose :("],
   ["GAME_ID_IS_EMPTY", "Game Not Found"],

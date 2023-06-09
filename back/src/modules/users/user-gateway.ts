@@ -15,7 +15,11 @@ import { Gauge } from 'prom-client';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { GetUserInfo } from './dto/get-user-info-response.dto';
 @WebSocketGateway({
-  cors: true,
+  cors: {
+    origin: 'http://localhost:8081',
+    allowedHeaders: ['authorization'],
+    credentials: true,
+  },
 })
 export class UserGateWay
   implements
@@ -49,6 +53,11 @@ export class UserGateWay
   @SubscribeMessage(UserGateWayConstants.USER_LOGIN)
   async handleJoinEvent() {
     Logger.log(`login event recived`);
+  }
+  @UseGuards(WsGuard)
+  @SubscribeMessage(UserGateWayConstants.GET_USER_INFO)
+  async handleGetUserInfoEvent() {
+    Logger.log('get user info event recived')
   }
   @OnEvent(UserGateWayConstants.SEND_USER_INFO_EVENT)
   listentToEvent(msg: GetUserInfo) {

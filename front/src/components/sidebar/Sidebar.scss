@@ -1,12 +1,13 @@
 .sidebar {
   width: 8%;
   height: 100%;
-  background-color: #000000;
+  background-color: #f2f5f6;
   position: fixed;
   top: 0;
   left: 0;
   overflow-x: hidden;
   z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
 }
 .menu {
   width: 100%;
@@ -18,32 +19,32 @@
 .list-style {
   list-style: none;
   span {
-    font-size: 27px;
+    font-size: 2.5rem;
   }
 
   button {
     background-color: transparent;
-    color: #fff;
+    color: #424a57;
     border: none;
     margin-bottom: 40px;
   }
   button :hover {
-    color: #db1349;
+    color: #4f45e4;
   }
   button :focus {
-    color: #db1349;
+    color: #4f45e4;
   }
 }
 .list-style a {
   display: block;
-  color: #fff;
+  color: #424a57;
   margin-bottom: 40px;
 }
 .list-style li:hover a {
-  color: #db1349;
+  color: #4f45e4;
 }
 .list-style li:focus a {
-  color: #db1349;
+  color: #4f45e4;
 }
 
 .setting-menu {

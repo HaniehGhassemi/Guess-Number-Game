@@ -120,7 +120,7 @@ export default defineComponent({
       border-radius: 50%;
       width: 40px;
       height: 40px;
-      background-color: #db1349;
+      background-color: #4f45e4;
     }
 
     .right {
@@ -143,10 +143,11 @@ export default defineComponent({
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: #424a578b;
+    box-shadow: rgba(0, 0, 0, 0.207) 0px 5px 15px 0px;
   }
   .active {
-    background-color: #db1349;
+    background-color: #4f45e4;
   }
 }
 </style>

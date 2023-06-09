@@ -1,7 +1,6 @@
 import { defineComponent, onMounted, ref } from "vue";
 import axios from "axios";
 import AppContainer from "@/components/base/AppContainer.vue";
-import Container from "@/components/container/Container.vue";
 import Button from "@/components/Buttons/Button.vue";
 import { useRoute } from "vue-router";
 import { gerErrorMessage } from "@/services/ErrorHandling";
@@ -10,7 +9,6 @@ export default defineComponent({
   name: "RessetPassword",
   components: {
     AppContainer,
-    Container,
     Button,
   },
   setup() {

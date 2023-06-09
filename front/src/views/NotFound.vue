@@ -1,22 +1,18 @@
 <template>
   <AppContainer>
-    <MainContainer>
-      <div class="not-found">
-        <h2>404</h2>
-        <p>Page Not Found</p>
-      </div>
-    </MainContainer>
+    <div class="not-found">
+      <h2>404</h2>
+      <p>Page Not Found</p>
+    </div>
   </AppContainer>
 </template>
 
 <script>
 import AppContainer from "@/components/base/AppContainer.vue";
-import MainContainer from "@/components/base/MainContainer.vue";
 ("@/components/base/");
 export default {
   components: {
     AppContainer,
-    MainContainer,
   },
 };
 </script>
@@ -24,22 +20,25 @@ export default {
 <style lang="scss">
 @import "../assets/fonts/fonts.css";
 .not-found {
-  width: 100%;
   height: 100%;
+  width: 100%;
+  background-color: #f2f5f6;
+  border-radius: 20px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 
   h2 {
     font-family: bold;
-    font-size: 100px;
-    color: #ffff;
+    font-size: 10rem;
+    color: #4f45e4;
   }
   p {
     font-family: light;
-    font-size: 50px;
-    color: #ffff;
+    font-size: 2rem;
+    color: #424a57;
   }
 }
 </style>

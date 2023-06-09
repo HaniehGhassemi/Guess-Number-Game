@@ -1,6 +1,9 @@
 <template>
   <AppContainer>
-    <Container>
+    <div
+      class="game-section"
+      v-if="res != undefined && res?.randomNumber == null"
+    >
       <div class="game-title">
         <div style="width: 100%">
           <h2>I am thinking of a number Between 0-100</h2>
@@ -11,20 +14,36 @@
         </div>
       </div>
       <div class="game-form">
-        <input v-model="guess" id="guessinput" type="text" placeholder="0" />
+        <input
+          v-model="guess"
+          id="guessinput"
+          type="number"
+          placeholder="Guess Me!"
+        />
         <label id="errorMessage" class="error"></label>
         <Button @click="checkAnswer">Submit</Button>
       </div>
       <div class="game-result">
         <pre class="answer-result">{{ errorMessage }}</pre>
         <pre class="answer-result" v-if="res?.userAnswer != undefined">
-Your Guess is {{ res?.userAnswer }}</pre
+  Your Guess is {{ res?.userAnswer }}</pre
         >
         <pre class="answer-result" v-if="res?.chance != null">
-Remaining Chances {{ res?.chance }}</pre
+  Remaining Chances {{ res?.chance }}</pre
         >
       </div>
-    </Container>
+    </div>
+    <div class="game-section" v-else>
+      <div class="game-result">
+        <pre
+          class="answer-result">{{ errorMessage }}<br> The Number was {{res?.randomNumber}}</pre>
+        <pre class="answer-result">Do you want to play again?</pre>
+        <div class="play-agian">
+          <Button><a href="/guess-number">Yes</a></Button>
+          <Button><a href="/">No</a></Button>
+        </div>
+      </div>
+    </div>
   </AppContainer>
 </template>
 
@@ -34,7 +53,6 @@ import Button from "@/components/Buttons/Button.vue";
 import { defineComponent, onMounted, ref } from "vue";
 import axios from "axios";
 import { getUserInfo } from "@/services/getUserInfo";
-import Container from "@/components/container/Container.vue";
 import router from "@/router";
 import { gerErrorMessage } from "@/services/ErrorHandling";
 
@@ -42,7 +60,6 @@ export default defineComponent({
   name: "Guess-Number",
   components: {
     AppContainer,
-    Container,
     Button,
   },
   data() {
@@ -94,11 +111,9 @@ export default defineComponent({
             `${process.env.VUE_APP_BASE_API_URL}/guess-number/check-answer`,
             {
               gameId: 1,
-              userAnswer: +guess.value,
+              userAnswer: guess.value,
             }
           );
-          console.log(rescheckAnswer);
-
           const {
             data: { data },
           } = rescheckAnswer;
@@ -117,7 +132,6 @@ export default defineComponent({
         errorMessage.value = errr;
       }
     }
-
     onMounted(async () => {
       const {
         data: { data: userInfo },

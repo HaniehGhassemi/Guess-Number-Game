@@ -25,7 +25,7 @@ export default defineComponent({
     Slide,
   },
   setup() {
-    const carouselSlides = ["bg-1", "bg-2"];
+    const carouselSlides = ["bg-2", "bg-1"];
     return { carouselSlides };
   },
 });

@@ -14,6 +14,7 @@
 import SidebarVue from "../sidebar/Sidebar.vue";
 import Header from "../header/Header.vue";
 import MainContainer from "./MainContainer.vue";
+import { onMounted } from "vue";
 
 export default {
   name: "App-Container",

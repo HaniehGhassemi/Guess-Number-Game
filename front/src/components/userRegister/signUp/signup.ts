@@ -1,5 +1,4 @@
 import AppContainer from "@/components/base/AppContainer.vue";
-import Container from "@/components/container/Container.vue";
 import { defineComponent, ref } from "vue";
 import axios from "axios";
 import Button from "@/components/Buttons/Button.vue";
@@ -9,7 +8,6 @@ import { useRouter } from "vue-router";
 export default defineComponent({
   components: {
     AppContainer,
-    Container,
     Button,
   },
   setup() {

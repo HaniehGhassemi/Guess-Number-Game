@@ -1,5 +1,4 @@
 import AppContainer from "@/components/base/AppContainer.vue";
-import Container from "@/components/container/Container.vue";
 import { defineComponent, onMounted, ref } from "vue";
 import axios from "axios";
 import Button from "@/components/Buttons/Button.vue";
@@ -10,7 +9,6 @@ export default defineComponent({
   name: "SignIn",
   components: {
     AppContainer,
-    Container,
     Button,
   },
   setup() {
