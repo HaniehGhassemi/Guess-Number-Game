@@ -1,33 +1,27 @@
 <template>
   <div class="main-container">
-    <div class="content-section">
-      <slot></slot>
-    </div>
+    <RightContainer> <slot /></RightContainer>
+    <LeftContainer></LeftContainer>
   </div>
 </template>
 
 <script lang="ts">
+import RightContainer from "@/components/container/RightContainer.vue";
+import LeftContainer from "@/components/container/LeftContainer.vue";
 export default {
-  components: {},
+  components: {
+    RightContainer,
+    LeftContainer,
+  },
 };
 </script>
 
 <style>
 .main-container {
-  width: 100%;
-  height: 96%;
-  border-radius: 40px;
+  width: 94%;
+  height: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 2%;
-  padding-left: 2%;
-}
-.content-section {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 </style>
