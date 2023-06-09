@@ -92,6 +92,7 @@ export class GuessNumberService {
       success: true,
       data: {
         chance: gameSession.chance,
+        randomNumber: gameSession.chance == 0 ? gameSession.randomNumber : null,
         userAnswer: gameSession.userAnswer,
         message:
           gameSession.chance == 0
