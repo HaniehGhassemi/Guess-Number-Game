@@ -5,11 +5,11 @@ export default defineComponent({
   name: "Top-Player",
   setup() {
     const errorMessage = ref("");
-    const profilePic = ["1st-player", "2nd-player", "3rd-player", "4th-player"];
+    const profilePic = ["pro-6", "pro-3", "pro-2"];
     const topPlayers = ref([]);
     async function getTopPlayer() {
       const result = await axios.get(
-        `${process.env.VUE_APP_BASE_API_URL}/users/get-top-players?count=4`
+        `${process.env.VUE_APP_BASE_API_URL}/users/get-top-players?count=3`
       );
 
       if (result.data.success === false) {
