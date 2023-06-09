@@ -57,20 +57,28 @@
 <script lang="ts">
 import { onMounted, ref } from "vue";
 import { socketHandler } from "@/services/userInfo";
+import { useSocketStore } from "@/services/socketStore";
 export default {
   name: "Container-box",
   components: {},
 
   setup() {
     const user = ref();
+    const store = useSocketStore();
     async function connectWebSocket() {
+      const existSocket = store.getSocket;
+      let socketInstance = null;
       const token = localStorage.getItem("token");
       if (token) {
-        const socketInstance = new socketHandler(token);
+        if (!existSocket) {
+          socketInstance = new socketHandler(token);
+          store.save(socketInstance);
+        } else socketInstance = existSocket;
         if (!socketInstance.isConnect) {
           socketInstance.socket.connect();
+          socketInstance.socket.emit("login", null);
         }
-        socketInstance.socket.emit("login", null);
+        socketInstance.socket.emit("get-user-info", null);
         socketInstance.socket.on("res-user-info", (args: any) => {
           console.log(args);
           user.value = args;
@@ -96,8 +104,8 @@ export default {
     ];
     const random = Math.floor(Math.random() * profilePic.length);
     const randomPic = profilePic[random];
-    onMounted(() => {
-      connectWebSocket();
+    onMounted(async () => {
+      await connectWebSocket();
     });
     return {
       user,
@@ -110,6 +118,7 @@ export default {
 
 <style lang="scss">
 @import "@/assets/fonts/fonts.css";
+
 .left-container {
   width: 28%;
   height: 98%;
@@ -119,6 +128,7 @@ export default {
   align-items: center;
   border-radius: 40px;
 }
+
 .profile-section {
   width: 100%;
   height: 50%;
@@ -139,10 +149,12 @@ export default {
       height: 60%;
       box-shadow: rgba(0, 0, 0, 0.094) 0px 5px 15px 0px;
     }
+
     h3 {
       margin-top: 1rem;
       font-family: bold;
     }
+
     p {
       font-size: 0.8rem;
       font-family: light;
@@ -170,22 +182,26 @@ export default {
         color: #00000067;
       }
     }
+
     table {
       margin-top: 1rem;
       width: 80%;
       height: 20%;
       text-align: center;
       font-family: medium;
+
       tr {
         width: 100%;
         display: flex;
         align-self: center;
         justify-content: space-around;
       }
+
       tr th {
         width: 60px;
         text-align: center;
       }
+
       tr td {
         color: #4f45e4;
         text-align: center;
@@ -193,6 +209,7 @@ export default {
     }
   }
 }
+
 .none-profile-section {
   width: 100%;
   height: 50%;
@@ -202,6 +219,7 @@ export default {
   background-color: #f2f5f6;
   border-radius: 20px;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+
   p {
     font-family: light;
     color: #00000067;
@@ -225,6 +243,7 @@ export default {
     color: #424a57;
   }
 }
+
 .news-sections {
   width: 100%;
   height: 41%;
@@ -236,11 +255,13 @@ export default {
   justify-content: space-around;
   align-items: center;
   padding: 1rem;
+
   .new {
     width: 90%;
     height: 24%;
     background-color: #fff;
     border-radius: 20px;
+
     img {
       max-width: 100%;
       max-height: 100%;
