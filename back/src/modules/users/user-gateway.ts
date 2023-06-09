@@ -1,5 +1,6 @@
 import { OnModuleDestroy, OnModuleInit, UseGuards } from '@nestjs/common';
 import {
+  ConnectedSocket,
   OnGatewayConnection,
   OnGatewayDisconnect,
   SubscribeMessage,
@@ -32,6 +33,7 @@ export class UserGateWay
     @InjectMetric('connected_client_websocket')
     public clientCounter: Gauge<string>,
   ) {}
+  users = {};
   @WebSocketServer()
   server: Server;
   onModuleInit() {
@@ -40,24 +42,37 @@ export class UserGateWay
   onModuleDestroy() {
     this.clientCounter.reset();
   }
-  handleConnection(client: Socket) {
-    this.clientCounter.inc(1);
+  handleConnection(@ConnectedSocket() client: Socket) {
+    // this.clientCounter.inc(1);
     Logger.log(`client ${client.id} connected`);
   }
-  handleDisconnect(client: Socket) {
-    this.clientCounter.dec(1);
+  handleDisconnect(@ConnectedSocket() client: Socket) {
+    // this.clientCounter.dec(1);
+    if (this.users.hasOwnProperty(client.handshake.headers.cookie)) {
+      --this.users[client.handshake.headers.cookie];
+      if (this.users[client.handshake.headers.cookie] == 0) {
+        delete this.users[client.handshake.headers.cookie];
+      }
+      this.clientCounter.set(Object.keys(this.users).length);
+    }
+    Logger.log('dc', Object.keys(this.users).length);
     Logger.log(`${client.id} disconnected`);
   }
 
   @UseGuards(WsGuard)
   @SubscribeMessage(UserGateWayConstants.USER_LOGIN)
-  async handleJoinEvent() {
+  async handleJoinEvent(@ConnectedSocket() client: Socket) {
+    if (!this.users[client.handshake.headers.cookie])
+      this.users[client.handshake.headers.cookie] = 0;
+    ++this.users[client.handshake.headers.cookie];
+    Logger.log('lg', Object.keys(this.users).length);
+    this.clientCounter.set(Object.keys(this.users).length);
     Logger.log(`login event recived`);
   }
   @UseGuards(WsGuard)
   @SubscribeMessage(UserGateWayConstants.GET_USER_INFO)
   async handleGetUserInfoEvent() {
-    Logger.log('get user info event recived')
+    Logger.log('get user info event recived');
   }
   @OnEvent(UserGateWayConstants.SEND_USER_INFO_EVENT)
   listentToEvent(msg: GetUserInfo) {
