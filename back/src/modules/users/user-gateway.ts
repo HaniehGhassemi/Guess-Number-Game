@@ -15,7 +15,11 @@ import { Gauge } from 'prom-client';
 import { EventEmitter2, OnEvent } from '@nestjs/event-emitter';
 import { GetUserInfo } from './dto/get-user-info-response.dto';
 @WebSocketGateway({
-  cors: true,
+  cors: {
+    origin: 'http://localhost:8081',
+    allowedHeaders: ['authorization'],
+    credentials: true,
+  },
 })
 export class UserGateWay
   implements
