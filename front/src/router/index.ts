@@ -5,8 +5,6 @@ import SignIn from "@/components/userRegister/signIn/SignIn.vue";
 import RessetPassword from "@/components/userRegister/resstPass/RessetPassword.vue";
 import ForgetPassword from "@/components/userRegister/forgetPass/ForgetPassword.vue";
 import GuessNumber from "@/components/game/GuessNumber.vue";
-import Game from "../views/Game.vue";
-import UserRegistery from "@/views/UserRegistery.vue";
 import NotFound from "@/views/NotFound.vue";
 
 const routes: Array<RouteRecordRaw> = [
@@ -39,16 +37,6 @@ const routes: Array<RouteRecordRaw> = [
     path: "/guess-number",
     name: "Guess-Number",
     component: GuessNumber,
-  },
-  {
-    path: "/start-game",
-    name: "Game",
-    component: Game,
-  },
-  {
-    path: "/user-register",
-    name: "UserRegistery",
-    component: UserRegistery,
   },
   {
     path: "/:pathMatch(.*)*",
