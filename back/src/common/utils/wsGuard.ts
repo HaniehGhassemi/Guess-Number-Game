@@ -22,6 +22,9 @@ export class WsGuard implements CanActivate {
       const payload = await this.jwtService.verifyAsync(token, {
         secret: process.env.JWT_SECRET_KEY,
       });
+      //each user is added to a specific room
+      client.join(payload.userId.toString());
+      Logger.log(`${client.id} connected to room ${payload.userId}`);
       // 💡 We're assigning the payload to the request object here
       // so that we can access it in our route handlers
       context.switchToHttp().getRequest().user = payload;

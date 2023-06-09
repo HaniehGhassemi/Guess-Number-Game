@@ -10,14 +10,15 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { LoggerModule } from 'nestjs-pino';
 import { GamesModule } from './modules/games/games.module';
 import { PrometheusModule } from '@willsoto/nestjs-prometheus';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
-    PrometheusModule.register({
-      path: 'http://localhost:9090/metrics',
-    }),
+    EventEmitterModule.forRoot(),
+    PrometheusModule.register(),
     LoggerModule.forRoot({
       pinoHttp: {
+        autoLogging: false,
         formatters: {
           level: (label) => {
             return { level: label.toUpperCase() };
