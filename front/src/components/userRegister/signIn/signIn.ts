@@ -4,7 +4,6 @@ import axios from "axios";
 import Button from "@/components/Buttons/Button.vue";
 import router from "@/router";
 import { gerErrorMessage } from "@/services/ErrorHandling";
-import { socketHandler } from "@/services/userInfo";
 
 export default defineComponent({
   name: "SignIn",
@@ -27,9 +26,6 @@ export default defineComponent({
         );
         if (result.status === 201) {
           localStorage.setItem("token", result.data.data.token);
-          const socketInstance = new socketHandler(result.data.data.token);
-          socketInstance.socket.connect();
-          socketInstance.socket.emit("login", null);
           router.push({ name: "Home" });
         }
       } catch (error: any) {

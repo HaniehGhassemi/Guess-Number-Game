@@ -67,7 +67,9 @@ export default {
       const token = localStorage.getItem("token");
       if (token) {
         const socketInstance = new socketHandler(token);
-        socketInstance.socket.connect();
+        if (!socketInstance.isConnect) {
+          socketInstance.socket.connect();
+        }
         socketInstance.socket.emit("login", null);
         socketInstance.socket.on("res-user-info", (args: any) => {
           console.log(args);
