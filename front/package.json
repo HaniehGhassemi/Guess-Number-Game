@@ -15,7 +15,8 @@
     "socket.io-client": "^4.6.2",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
-    "vue-socket.io": "^3.0.10"
+    "vue-socket.io": "^3.0.10",
+    "vue3-toastify": "^0.1.11"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.4.0",

@@ -3,6 +3,8 @@ import axios from "axios";
 import AppContainer from "../../base/AppContainer.vue";
 import Button from "../../Buttons/Button.vue";
 import { gerErrorMessage } from "@/services/ErrorHandling";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 export default defineComponent({
   name: "ForgetPass",
   components: {
@@ -13,6 +15,9 @@ export default defineComponent({
     const email = ref();
     const errorMessage = ref("");
     async function forgetPass() {
+      toast("Please wait...", {
+        autoClose: 8000,
+      });
       try {
         const redirectLink = "http://localhost:8081/resset-pass";
         const result = await axios.post(
@@ -23,7 +28,9 @@ export default defineComponent({
           }
         );
         if (result.status == 201) {
-          alert("check Your Email");
+          toast.success("please check your email", {
+            autoClose: 2000,
+          });
         }
       } catch (error: any) {
         const message: string = Array.isArray(error.response.data.data.message)

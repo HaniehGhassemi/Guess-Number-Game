@@ -25,9 +25,9 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <button @click="sendtoast">
             <span class="material-symbols-rounded"> settings </span>
-          </a>
+          </button>
         </li>
       </ul>
     </div>
@@ -37,6 +37,8 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import router from "@/router";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default defineComponent({
   name: "Sidebar-vue",
@@ -49,8 +51,14 @@ export default defineComponent({
         router.push({ name: "SignIn" });
       }
     }
+    function sendtoast() {
+      toast.success("This feature will be added soon.", {
+        autoClose: 2000,
+      });
+    }
     return {
       redirectUser,
+      sendtoast,
     };
   },
 });

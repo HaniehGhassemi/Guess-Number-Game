@@ -11,6 +11,14 @@ export default defineComponent({
     AppContainer,
     Button,
   },
+  created() {
+    if (
+      this.$route.name === "sign-in" &&
+      this.$route.query.from === "sign-up"
+    ) {
+      alert("شما به این صفحه با استفاده از router.push رفته‌اید!");
+    }
+  },
   setup() {
     const usernameOrEmail = ref();
     const password = ref();
