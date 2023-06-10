@@ -1,9 +1,12 @@
 import AppContainer from "@/components/base/AppContainer.vue";
-import { defineComponent, onMounted, ref } from "vue";
+import { defineComponent, onMounted, ref, watch } from "vue";
 import axios from "axios";
 import Button from "@/components/Buttons/Button.vue";
 import router from "@/router";
 import { gerErrorMessage } from "@/services/ErrorHandling";
+import { useRoute } from "vue-router";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
 
 export default defineComponent({
   name: "SignIn",
@@ -11,18 +14,12 @@ export default defineComponent({
     AppContainer,
     Button,
   },
-  created() {
-    if (
-      this.$route.name === "sign-in" &&
-      this.$route.query.from === "sign-up"
-    ) {
-      alert("شما به این صفحه با استفاده از router.push رفته‌اید!");
-    }
-  },
   setup() {
     const usernameOrEmail = ref();
     const password = ref();
     const errorMessage = ref("");
+    const route = useRoute();
+
     async function signIn() {
       try {
         const result = await axios.post(
@@ -47,6 +44,11 @@ export default defineComponent({
     onMounted(async () => {
       if (localStorage.getItem("token")) {
         router.push({ name: "Home" });
+      }
+      if (route.query.successMessage) {
+        toast.success("Your signup was successful. Please login first!", {
+          autoClose: 3000,
+        });
       }
     });
 

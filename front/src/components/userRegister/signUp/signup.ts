@@ -3,7 +3,7 @@ import { defineComponent, ref } from "vue";
 import axios from "axios";
 import Button from "@/components/Buttons/Button.vue";
 import { gerErrorMessage } from "@/services/ErrorHandling";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 
@@ -20,6 +20,7 @@ export default defineComponent({
     const errorMessage = ref("");
     const password = ref();
     const confirmPassword = ref();
+
     async function signUp() {
       try {
         const result = await axios.post(
@@ -33,7 +34,10 @@ export default defineComponent({
           }
         );
         if (result.status == 201) {
-          router.push({ name: "SignIn" });
+          router.push({
+            path: "/sign-in",
+            query: { successMessage: "sign-up" },
+          });
         }
       } catch (error: any) {
         const message: string = Array.isArray(error.response.data.data.message)
