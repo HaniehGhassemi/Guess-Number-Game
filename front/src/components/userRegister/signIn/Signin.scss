@@ -1,0 +1,70 @@
+@import "@/assets/fonts/fonts.css";
+
+.signin-section {
+  width: 100%;
+  height: 100%;
+  background-color: #f2f5f6;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  a {
+    text-decoration: none;
+    color: rgba(80, 69, 228, 0.531);
+    font-family: medium;
+    margin-top: 2%;
+    font-size: 18px;
+  }
+}
+.signin-title {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+
+  h1 {
+    font-family: bold;
+    font-size: 3.5rem;
+    color: #4f45e4;
+    margin-bottom: 2%;
+  }
+}
+.signin-form {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  input {
+    width: 220px;
+    height: 50px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: medium;
+    margin-bottom: 2%;
+    box-shadow: rgba(0, 0, 0, 0.094) 0px 5px 15px 0px;
+  }
+  input ::placeholder {
+    color: rgba(255, 255, 255, 0.917);
+    text-align: center;
+  }
+}
+
+.signin-error {
+  width: 100%;
+  height: 10%;
+  color: #4f45e4;
+  font-family: medium;
+  font-size: 23px;
+  margin-top: 1rem;
+}

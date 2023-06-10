@@ -1,72 +1,27 @@
 <template>
   <header>
-    <div class="header-container">
-      <div class="logo-section w-10">
-        <img
-          id="img-logo"
-          class="logo"
-          src="@/assets/images/pslogo.png"
-          alt=""
-        />
+    <div class="header-items-sections">
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"
+      />
+      <div class="header-title">
+        <h1>Guess Number Game</h1>
       </div>
-      <div class="w-50">
-        <ul class="menu-nav">
-          <li class="underline-active">
-            <a href="/">Home</a>
-          </li>
-          <li class="underline-active">
-            <a href="">Scoreboard</a>
-          </li>
-        </ul>
-      </div>
-      <div class="profile-section w-50">
-        <div class="user-menu-section">
-          <div class="username">
-            <p id="userFullname" v-if="user != null">
-              {{ user.fullName }}
-            </p>
-            <a id="userFullname" v-else href="/sign-in">Log in</a>
-            &nbsp;&nbsp;
+
+      <div class="header-icons">
+        <div class="dropdown" v-if="user == null">
+          <span class="material-symbols-rounded"> login </span>
+          <div class="dropdown-content">
+            <a href="/sign-up">Sign up</a>
+            <a href="/sign-in">Sign in</a>
           </div>
-          <img
-            id="img-profile"
-            class="profile-circle"
-            src="@/assets/images/profile-pic.jpg"
-            alt=""
-          />
-          <div class="dropdown-content" v-if="user != null">
-            <div class="dropdown-item" title="Score">
-              <span id="userRank"
-                ><i
-                  ><fa
-                    class="fa"
-                    icon="fa-solid fa-star"
-                    style="color: #ffffff"
-                  />{{ user.sumScore }}</i
-                ></span
-              >
-            </div>
-            <div class="dropdown-item" title="Rank">
-              <span
-                ><i
-                  ><fa class="fa" icon="fa-solid fa-medal" />{{ user.rank }}</i
-                ></span
-              >
-            </div>
-            <div class="dropdown-item" title="Number of times played">
-              <span id="userRank"
-                ><i
-                  ><fa
-                    class="fa"
-                    icon="fa-solid fa-rotate-right"
-                    style="color: #ffffff"
-                  />{{ user.playCount }}</i
-                ></span
-              >
-              <span id="userPlayCount"></span>
-            </div>
-            <a href="/resset-pass">Change Password</a>
-            <a id="logout" href="#">Logout</a>
+        </div>
+        <div class="dropdown" v-else>
+          <span class="material-symbols-rounded"> person </span>
+          <div class="dropdown-content">
+            <button @click="changePass">change Password</button>
+            <button @click="logOut">Log Out</button>
           </div>
         </div>
       </div>
@@ -75,23 +30,31 @@
 </template>
 
 <script lang="ts">
-import { getUserInfo } from "@/services/getUserInfo";
 import { defineComponent, onMounted, ref } from "vue";
+import { getUserInfo } from "@/services/getUserInfo";
+import router from "@/router";
 
 export default defineComponent({
   name: "Header-vue",
-
   setup() {
     const user = ref();
+    function logOut() {
+      localStorage.removeItem("token");
+      router.go(0);
+    }
+    function changePass() {
+      router.push({ name: "RessetPassword" });
+    }
     onMounted(async () => {
       const {
         data: { data: userInfo },
       } = await getUserInfo();
       user.value = userInfo;
     });
-
     return {
       user,
+      logOut,
+      changePass,
     };
   },
 });

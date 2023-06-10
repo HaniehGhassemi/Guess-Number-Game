@@ -1,10 +1,10 @@
 scrape_configs:
   - job_name: 'prometheus'
     scrape_interval: 2s
-
+    metrics_path: /api/metrics
     static_configs:
       - targets: [
-        'localhost:9090',
+        'host.docker.internal:8080',
       ]
         labels:
           service: 'app'

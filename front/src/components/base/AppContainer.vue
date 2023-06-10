@@ -1,16 +1,27 @@
 <template>
   <div class="app-container">
-    <Header> </Header>
-    <slot></slot>
+    <SidebarVue></SidebarVue>
+    <div class="box-section">
+      <Header></Header>
+      <MainContainer>
+        <slot></slot>
+      </MainContainer>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import SidebarVue from "../sidebar/Sidebar.vue";
 import Header from "../header/Header.vue";
+import MainContainer from "./MainContainer.vue";
+import { onMounted } from "vue";
+
 export default {
   name: "App-Container",
   components: {
+    SidebarVue,
     Header,
+    MainContainer,
   },
 };
 </script>

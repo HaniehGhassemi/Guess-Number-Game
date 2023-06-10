@@ -1,9 +1,11 @@
 <template>
   <AppContainer>
-    <Container>
-      <div class="form-section show" id="resetpass-section">
+    <div class="ressetpass-section">
+      <div class="ressetpass-title">
         <h1>Resset Password</h1>
         <p>Please enter your new password</p>
+      </div>
+      <div class="ressetpass-form">
         <input
           v-model="newPassword"
           type="password"
@@ -18,14 +20,13 @@
           id="repassword"
           placeholder="Repassword"
         />
-        <Button @click="ressetPass">Submit</Button>
-        <br />
-        <p id="show-message"></p>
+        <p class="ressetpass-error">{{ errorMessage }}</p>
       </div>
-    </Container>
+      <Button @click="ressetPass">Submit</Button>
+    </div>
   </AppContainer>
 </template>
 
 <script lang="ts" src="./ressetPass.ts"></script>
 
-<style lang="scss" src="../UserRegisterStyles.scss"></style>
+<style lang="scss" src="./RessetPassword.scss"></style>

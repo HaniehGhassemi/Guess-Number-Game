@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: TiltWarp;
+  border: none;
 }
 body {
   padding: 0;
@@ -14,8 +14,60 @@ body {
 .app-container {
   width: 100%;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  background-color: #2e2f30;
-  flex-direction: column;
+  // background-image: radial-gradient(#3e0917, rgb(10, 15, 21));
+  background-color: #f5f5f5;
 }
+
+.box-section {
+  width: 92%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 125px;
+  float: right;
+}
+
+// .header {
+//   width: 100%;
+//   height: 10%;
+//   background-color: transparent;
+//   display: flex;
+//   float: right;
+//   margin-right: 3%;
+// }
+
+// .slider {
+//   width: 82%;
+//   height: 40%;
+//   background-color: white;
+//   display: flex;
+//   float: right;
+//   margin-right: 3%;
+//   margin-top: 1%;
+// }
+
+// .topplayer {
+//   width: 82%;
+//   height: 40%;
+//   margin-top: 2%;
+//   margin-right: 3%;
+//   display: flex;
+//   float: right;
+//   align-items: center;
+//   justify-content: space-between;
+// }
+
+// .body {
+//   width: 20%;
+//   height: 80%;
+//   margin-top: 2%;
+//   background-color: white;
+// }
+
+// .sidebar {
+//   width: 13%;
+//   height: 100%;
+//   background-color: white;
+//   margin-right: 2%;
+// }

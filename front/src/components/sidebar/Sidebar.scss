@@ -1,0 +1,56 @@
+.sidebar {
+  width: 8%;
+  height: 100%;
+  background-color: #f2f5f6;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  z-index: 1;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 5px 15px 0px;
+}
+.menu {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.list-style {
+  list-style: none;
+  span {
+    font-size: 2.5rem;
+  }
+
+  button {
+    background-color: transparent;
+    color: #424a57;
+    border: none;
+    margin-bottom: 40px;
+  }
+  button :hover {
+    color: #4f45e4;
+  }
+  button :focus {
+    color: #4f45e4;
+  }
+}
+.list-style a {
+  display: block;
+  color: #424a57;
+  margin-bottom: 40px;
+}
+.list-style li:hover a {
+  color: #4f45e4;
+}
+.list-style li:focus a {
+  color: #4f45e4;
+}
+
+.setting-menu {
+  width: 100%;
+  height: 30%;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}

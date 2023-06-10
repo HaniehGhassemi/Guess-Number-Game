@@ -1,8 +1,10 @@
 <template>
   <AppContainer>
-    <container>
-      <div class="form-section">
-        <h1>Sign Up</h1>
+    <div class="signUp-section">
+      <div class="signUp-title">
+        <h2>Sign Up</h2>
+      </div>
+      <div class="signUp-form">
         <input
           v-model="fullname"
           type="text"
@@ -38,12 +40,13 @@
           id="re-password"
           placeholder="Repeat Password"
         />
+        <p class="signUp-error">{{ errorMessage }}</p>
         <Button @click="signUp">Sign Up</Button>
       </div>
-    </container>
+    </div>
   </AppContainer>
 </template>
 
 <script lang="ts" src="./signup.ts"></script>
 
-<style lang="scss" src="../UserRegisterStyles.scss"></style>
+<style lang="scss" src="./SignUp.scss"></style>

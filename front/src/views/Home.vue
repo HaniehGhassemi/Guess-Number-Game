@@ -1,25 +1,18 @@
 <template>
-  <div>
-    <AppContainer>
-      <div class="showOption">
-        <div class="signinFirst">
-          <Button><a href="/user-register">Be our user!</a></Button
-          ><br /><br /><br /><br />
-          <Button><a href="/start-game">Play our Game!</a></Button>
-        </div>
-      </div>
-    </AppContainer>
-  </div>
+  <AppContainer> <SlideShow></SlideShow> <TopPlayer></TopPlayer> </AppContainer>
 </template>
 
 <script lang="ts">
 import AppContainer from "@/components/base/AppContainer.vue";
-import Button from "@/components/Buttons/Button.vue";
+import SlideShow from "@/components/slideShow/SlideShow.vue";
+import TopPlayer from "@/components/topPlayer/TopPlayer.vue";
+
 export default {
   name: "Home-Vue",
   components: {
     AppContainer,
-    Button,
+    TopPlayer,
+    SlideShow,
   },
 };
 </script>
