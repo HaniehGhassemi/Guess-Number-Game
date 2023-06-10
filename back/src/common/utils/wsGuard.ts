@@ -30,6 +30,7 @@ export class WsGuard implements CanActivate {
         secret: process.env.JWT_SECRET_KEY,
       });
       //each user is added to a specific room
+      client.handshake.headers.cookie = payload.userId.toString();
       client.join(payload.userId.toString());
       Logger.log(`${client.id} connected to room ${payload.userId}`);
       //send user info
