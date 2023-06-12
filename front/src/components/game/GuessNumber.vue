@@ -20,11 +20,10 @@
           type="number"
           placeholder="Guess Me!"
         />
-        <label id="errorMessage" class="error"></label>
-        <Button @click="checkAnswer">Submit</Button>
       </div>
+      <Button @click="checkAnswer">Submit</Button>
       <div class="game-result">
-        <pre class="answer-result">{{ errorMessage }}</pre>
+        <pre class="answer-result" v-if="errorMessage">{{ errorMessage }}</pre>
         <pre class="answer-result" v-if="res?.userAnswer != undefined">
   Your Guess is {{ res?.userAnswer }}</pre
         >

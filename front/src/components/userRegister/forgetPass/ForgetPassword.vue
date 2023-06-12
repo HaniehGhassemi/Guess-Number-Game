@@ -12,9 +12,11 @@
           id="email"
           placeholder="Email"
         />
-        <p class="forgetpass-error">{{ errorMessage }}</p>
-        <Button @click="forgetPass">Submit</Button>
       </div>
+      <div class="error">
+        <p class="forgetpass-error">{{ errorMessage }}</p>
+      </div>
+      <Button @click="forgetPass">Submit</Button>
     </div>
   </AppContainer>
 </template>

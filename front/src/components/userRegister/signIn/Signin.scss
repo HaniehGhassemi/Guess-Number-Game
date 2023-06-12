@@ -34,10 +34,10 @@
 }
 .signin-form {
   width: 100%;
-  height: 30%;
+  height: 20%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   text-align: center;
 
@@ -51,7 +51,6 @@
     justify-content: center;
     text-align: center;
     font-family: medium;
-    margin-bottom: 2%;
     box-shadow: rgba(0, 0, 0, 0.094) 0px 5px 15px 0px;
   }
   input ::placeholder {
@@ -60,11 +59,15 @@
   }
 }
 
-.signin-error {
+.error {
   width: 100%;
   height: 10%;
-  color: #4f45e4;
-  font-family: medium;
-  font-size: 23px;
-  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .signin-error {
+    color: #4f45e4;
+    font-family: medium;
+    font-size: 23px;
+  }
 }

@@ -18,6 +18,8 @@
           id="password"
           placeholder="Password"
         />
+      </div>
+      <div class="error">
         <p class="signin-error">{{ errorMessage }}</p>
       </div>
       <Button @click="signIn">Sign In</Button>

@@ -40,9 +40,12 @@
           id="re-password"
           placeholder="Repeat Password"
         />
-        <p class="signUp-error">{{ errorMessage }}</p>
-        <Button @click="signUp">Sign Up</Button>
       </div>
+      <div class="error">
+        <p class="signup-error">{{ errorMessage }}</p>
+      </div>
+
+      <Button @click="signUp">Submit</Button>
     </div>
   </AppContainer>
 </template>

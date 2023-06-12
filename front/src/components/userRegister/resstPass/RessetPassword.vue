@@ -20,8 +20,11 @@
           id="repassword"
           placeholder="Repassword"
         />
+      </div>
+      <div class="error">
         <p class="ressetpass-error">{{ errorMessage }}</p>
       </div>
+
       <Button @click="ressetPass">Submit</Button>
     </div>
   </AppContainer>
