@@ -5,13 +5,7 @@
         <p>Enter your email to receive the password recovery link</p>
       </div>
       <div class="forgetpass-form">
-        <input
-          v-model="email"
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-        />
+        <BaseInput v-model="email" type="email" placeholder="Email"></BaseInput>
       </div>
       <div class="error">
         <p class="forgetpass-error">{{ errorMessage }}</p>

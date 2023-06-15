@@ -1,6 +1,6 @@
 <template>
   <div class="submit">
-    <button class="buttons" v-bidn="$attrs">
+    <button class="buttons" v-bind="$attrs">
       <slot></slot>
     </button>
   </div>

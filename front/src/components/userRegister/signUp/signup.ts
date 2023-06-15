@@ -3,14 +3,14 @@ import { defineComponent, ref } from "vue";
 import axios from "axios";
 import Button from "@/components/Buttons/Button.vue";
 import { gerErrorMessage } from "@/services/ErrorHandling";
-import { useRoute, useRouter } from "vue-router";
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
+import BaseInput from "@/components/input/BaseInput.vue";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   components: {
     AppContainer,
     Button,
+    BaseInput,
   },
   setup() {
     const router = useRouter();

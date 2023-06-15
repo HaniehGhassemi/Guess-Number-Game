@@ -5,22 +5,16 @@
         <h1>Resset Password</h1>
         <p>Please enter your new password</p>
       </div>
-      <div class="ressetpass-form">
-        <input
-          v-model="newPassword"
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-        />
-        <input
-          v-model="confirmNewPassword"
-          type="password"
-          name="repassword"
-          id="repassword"
-          placeholder="Repassword"
-        />
-      </div>
+      <BaseInput
+        v-model="newPassword"
+        type="password"
+        placeholder="Password"
+      ></BaseInput>
+      <BaseInput
+        v-model="confirmNewPassword"
+        type="password"
+        placeholder="Confrim Password"
+      ></BaseInput>
       <div class="error">
         <p class="ressetpass-error">{{ errorMessage }}</p>
       </div>

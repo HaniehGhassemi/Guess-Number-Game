@@ -5,41 +5,27 @@
         <h2>Sign Up</h2>
       </div>
       <div class="signUp-form">
-        <input
+        <BaseInput
           v-model="fullname"
           type="text"
-          name="name"
-          id="name"
           placeholder="Full Name"
-        />
-        <input
+        ></BaseInput>
+        <BaseInput
           v-model="username"
           type="text"
-          name="username"
-          id="username"
           placeholder="Username"
-        />
-        <input
-          v-model="email"
-          type="email"
-          name="email"
-          id="email"
-          placeholder="Email"
-        />
-        <input
+        ></BaseInput>
+        <BaseInput v-model="email" type="email" placeholder="Email"></BaseInput>
+        <BaseInput
           v-model="password"
           type="password"
-          name="password"
-          id="password"
           placeholder="Password"
-        />
-        <input
+        ></BaseInput>
+        <BaseInput
           v-model="confirmPassword"
           type="password"
-          name="re-password"
-          id="re-password"
           placeholder="Repeat Password"
-        />
+        ></BaseInput>
       </div>
       <div class="error">
         <p class="signup-error">{{ errorMessage }}</p>

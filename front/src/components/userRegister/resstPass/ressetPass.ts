@@ -4,12 +4,14 @@ import AppContainer from "@/components/base/AppContainer.vue";
 import Button from "@/components/Buttons/Button.vue";
 import { useRoute } from "vue-router";
 import { gerErrorMessage } from "@/services/ErrorHandling";
+import BaseInput from "@/components/input/BaseInput.vue";
 import router from "@/router";
 export default defineComponent({
   name: "RessetPassword",
   components: {
     AppContainer,
     Button,
+    BaseInput,
   },
   setup() {
     const newPassword = ref();

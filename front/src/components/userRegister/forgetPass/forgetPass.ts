@@ -2,6 +2,7 @@ import { defineComponent, ref } from "vue";
 import axios from "axios";
 import AppContainer from "../../base/AppContainer.vue";
 import Button from "../../Buttons/Button.vue";
+import BaseInput from "@/components/input/BaseInput.vue";
 import { gerErrorMessage } from "@/services/ErrorHandling";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -10,6 +11,7 @@ export default defineComponent({
   components: {
     AppContainer,
     Button,
+    BaseInput,
   },
   setup() {
     const email = ref();

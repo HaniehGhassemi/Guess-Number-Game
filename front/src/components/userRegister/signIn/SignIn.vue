@@ -4,21 +4,18 @@
       <div class="signin-title">
         <h1>Sign In</h1>
       </div>
-      <div class="signin-form">
-        <input
-          v-model="usernameOrEmail"
-          name="signData"
-          type="text"
-          placeholder="Username or Email"
-        />
-        <input
-          v-model="password"
-          type="password"
-          name="password"
-          id="password"
-          placeholder="Password"
-        />
-      </div>
+
+      <BaseInput
+        v-model="usernameOrEmail"
+        type="text"
+        placeholder="Username or Email"
+      ></BaseInput>
+      <BaseInput
+        v-model="password"
+        type="password"
+        placeholder="Password"
+      ></BaseInput>
+
       <div class="error">
         <p class="signin-error">{{ errorMessage }}</p>
       </div>

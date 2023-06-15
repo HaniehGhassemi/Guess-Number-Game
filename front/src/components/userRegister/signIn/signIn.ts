@@ -4,6 +4,7 @@ import axios from "axios";
 import Button from "@/components/Buttons/Button.vue";
 import router from "@/router";
 import { gerErrorMessage } from "@/services/ErrorHandling";
+import BaseInput from "@/components/input/BaseInput.vue";
 import { useRoute } from "vue-router";
 import { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
@@ -13,6 +14,7 @@ export default defineComponent({
   components: {
     AppContainer,
     Button,
+    BaseInput,
   },
   setup() {
     const usernameOrEmail = ref();

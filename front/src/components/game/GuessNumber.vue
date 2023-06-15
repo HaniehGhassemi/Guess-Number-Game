@@ -13,14 +13,12 @@
           <span style="--i: 4">it?</span>
         </div>
       </div>
-      <div class="game-form">
-        <input
-          v-model="guess"
-          id="guessinput"
-          type="number"
-          placeholder="Guess Me!"
-        />
-      </div>
+      <BaseInput
+        v-model.number="guess"
+        type="number"
+        placeholder="Guess Me!"
+      ></BaseInput>
+
       <Button @click="checkAnswer">Submit</Button>
       <div class="game-result">
         <pre class="answer-result" v-if="errorMessage">{{ errorMessage }}</pre>
@@ -49,6 +47,7 @@
 <script lang="ts">
 import AppContainer from "@/components/base/AppContainer.vue";
 import Button from "@/components/Buttons/Button.vue";
+import BaseInput from "@/components/input/BaseInput.vue";
 import { defineComponent, onMounted, ref } from "vue";
 import axios from "axios";
 import { getUserInfo } from "@/services/getUserInfo";
@@ -60,6 +59,7 @@ export default defineComponent({
   components: {
     AppContainer,
     Button,
+    BaseInput,
   },
   data() {
     return {
@@ -138,6 +138,7 @@ export default defineComponent({
       user.value = userInfo;
       await newGame();
     });
+    console.log("/ghghgh////////////////////////////////", guess.value);
 
     return {
       user,
