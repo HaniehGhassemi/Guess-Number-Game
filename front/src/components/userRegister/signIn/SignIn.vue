@@ -4,7 +4,6 @@
       <div class="signin-title">
         <h1>Sign In</h1>
       </div>
-
       <BaseInput
         v-model="usernameOrEmail"
         type="text"

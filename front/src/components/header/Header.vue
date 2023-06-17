@@ -40,7 +40,7 @@ export default defineComponent({
     const user = ref();
     function logOut() {
       localStorage.removeItem("token");
-      router.go(0);
+      router.push({ name: "Home" });
     }
     function changePass() {
       router.push({ name: "RessetPassword" });
