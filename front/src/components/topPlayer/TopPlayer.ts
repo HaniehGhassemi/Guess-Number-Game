@@ -7,6 +7,7 @@ export default defineComponent({
     const errorMessage = ref("");
     const profilePic = ["pro-6", "pro-3", "pro-2"];
     const topPlayers = ref([]);
+
     async function getTopPlayer() {
       const result = await axios.get(
         `${process.env.VUE_APP_BASE_API_URL}/users/get-top-players?count=3`

@@ -32,15 +32,18 @@
 <script lang="ts">
 import { defineComponent, onMounted, ref } from "vue";
 import { getUserInfo } from "@/services/getUserInfo";
+import { useRouter } from "vue-router";
 import router from "@/router";
 
 export default defineComponent({
   name: "Header-vue",
   setup() {
     const user = ref();
+    const route = useRouter();
     function logOut() {
       localStorage.removeItem("token");
-      router.push({ name: "Home" });
+      router.push({ path: "/", query: { logout: "logout" } });
+      route.go(0);
     }
     function changePass() {
       router.push({ name: "RessetPassword" });

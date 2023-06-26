@@ -31,10 +31,13 @@
       </div>
     </div>
     <div class="game-section" v-else>
-      <div class="game-result">
-        <pre
-          class="answer-result">{{ errorMessage }}<br> The Number was {{res?.randomNumber}}</pre>
-        <pre class="answer-result">Do you want to play again?</pre>
+      <div class="game-result" style="height: 38%">
+        <div class="game-result-info">
+          <pre
+            class="answer-result">{{ errorMessage }}<br> The Number was {{res?.randomNumber}}</pre>
+          <pre class="answer-result">Do you want to play again?</pre>
+        </div>
+
         <div class="play-agian">
           <Button><a href="/guess-number">Yes</a></Button>
           <Button><a href="/">No</a></Button>
